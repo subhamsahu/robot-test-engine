@@ -28,7 +28,6 @@ const Config = () => {
   };
   const handleConfigContentChange = async(configFile) =>{
     const url =  BACKEND_URL + '/file-manager/get-file-data'
-    console.log(url)
     const params = {
       'file_path':configFile.relativePath
     }
@@ -37,7 +36,6 @@ const Config = () => {
       setSelectedFileContent(data.data)
     }else{
       setSelectedFileContent('')
-      console.log(data)
       dispatch(showSnackBar({ msg: `${data.exception_reason}`, type: "error" }))
     }
   }

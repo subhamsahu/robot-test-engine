@@ -4,14 +4,19 @@ import { CssBaseline } from '@mui/material';
 import AppTheme from './components/AppTheme/AppTheme';
 import Snackbar from './components/SnackBar/Snackbar';
 import { SettingsProvider } from './context/SettingsContext';
+import TerminalIcon from '@mui/icons-material/Terminal';
+import Fab from '@mui/material/Fab';
 
 function App() {
   const content = useRoutes(routes);
   return (
     <SettingsProvider>
       <AppTheme>
-        <CssBaseline/>
+        <CssBaseline />
         {content}
+        <Fab sx={{ position: 'absolute', top: 80, right: 40 }} size='medium' className='bg-blue'>
+          <TerminalIcon />
+        </Fab>
         <Snackbar />
       </AppTheme>
     </SettingsProvider>

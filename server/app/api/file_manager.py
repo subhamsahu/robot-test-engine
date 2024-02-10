@@ -39,3 +39,24 @@ def set_file_data():
         return error_response(400,str(e))
     except Exception as e:
         return error_response(500,str(e))
+    
+@file_manager.route('/get-directory-structure', methods=['GET'])
+def get_dir_structure():
+    """
+    Get directory structure
+
+    This endpoint is used to get the directory structure of a given path.
+
+    :param log_path: The path to the directory.
+    :type log_path: str
+    :return: The directory structure.
+    :rtype: dict
+    :status 200: Successful.
+    :status 500: Internal server error.
+    """
+    try:
+        startpath = request.args.get("log_path")
+        tree = file_manager_controller_obj.get_dir_structure(startpath)
+        return success_response(data=tree,status=200), 200
+    except Exception as err:
+        return error_response(500,str(err)), 500

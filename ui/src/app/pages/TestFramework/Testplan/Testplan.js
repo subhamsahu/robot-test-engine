@@ -1,130 +1,313 @@
 import React, { useState } from 'react'
+import { Autocomplete, Button, FormControl, FormControlLabel, Grid, MenuItem, Select, Switch, TextField } from '@mui/material'
+import { useDispatch, useSelector } from 'react-redux'
+import DeleteIcon from '@mui/icons-material/Delete';
+import { LoadingButton } from '@mui/lab';
+import SaveIcon from '@mui/icons-material/Save';
+import { Tabs } from 'antd';
+
 import { ContentBox } from '../../../styles/AppStyles'
-import { Grid, MenuItem, Select } from '@mui/material'
+import { stateColorMap } from '../Tests/components/Constants'
+import { BACKEND_URL } from '../../../core/constants';
+import { post } from '../../../services/api';
+import { showSnackBar } from '../../../redux/actions/snackBarActions';
+
+// Destructure the Tab component from Tabs
+const { TabPane } = Tabs;
+
+const createPayload = {
+  name: "",
+  description: "",
+  testSuitesList: [
+
+  ],
+  isActive: true
+}
 
 const Testplan = () => {
+  const dispatch = useDispatch()
+  const testsuiteListResult = useSelector((state) => state.testSuiteListStateData)
+  const testcaseListResult = useSelector((state) => state.testCaseListStateData)
+
+  const [testplanPayload, settestplanPayload] = useState(createPayload)
   const [testplanList, settestplanList] = useState([])
-  const [selectedTestplan, setSelectedTestplan] = useState({
-    'name':'None',
-    'testList':[]
-  })
-  const handleMasterCheckBoxChange = async () => {
+  const [selectedTestplan, setselectedTestplan] = useState(null)
+
+  const [suiteList, setSuiteList] = useState(testsuiteListResult);
+  const [suitename, setsuitename] = useState('None')
+  const [selectedSuite, setselectedSuite] = useState(null)
+
+  const [testcaseList, setTestcaseList] = useState(testcaseListResult);
+
+  const handleTestplaneNameChange = (event, newValue) => {
+    let selectedObj = testplanList.find(obj => obj.name === newValue);
+    if (selectedObj) {
+      settestplanPayload(selectedObj)
+    }
+    else {
+      settestplanPayload({ ...createPayload });
+    }
+  };
+
+  const handleTestplanInputChange = (event, newInputValue) => {
+    // This will be triggered when the user types
+    // This will be triggered when the user types
+    let selectedObj = testplanList.find(obj => obj.name === newInputValue);
+    if (selectedObj) {
+      settestplanPayload(selectedObj)
+    }
+    else {
+      settestplanPayload({ ...createPayload, name: newInputValue });
+    }
+  }
+
+  const removeFromTestcasesList = () => {
 
   }
-  const handleCheckBoxChange = () => {
 
+  const onChangeForm = (e) => {
+    if (e.target.name === 'isActive') {
+      settestplanPayload({ ...testplanPayload, [e.target.name]: e.target.checked })
+    }
+    else {
+      settestplanPayload({ ...testplanPayload, [e.target.name]: e.target.value })
+    }
   }
-  const handleEdit = () => {
 
-  }
-  const handleOpenDialog = () => {
+  const handlesuitenameChange = (e, newValue) => {
+    setsuitename(newValue);
+  };
 
+  const handleSuiteInputChange = (event, newInputValue) => {
+    // This will be triggered when the user types
+    setsuitename(newInputValue);
+    let selectedObj = suiteList.find(obj => obj.name === newInputValue);
+    if (selectedObj) {
+      setselectedSuite(selectedObj)
+    }
+    else {
+      setselectedSuite(null)
+    }
   }
-  const handleTestplanChange = ()=>{
 
+  const appendToSuiteList = () => {
+    if (selectedSuite && !testplanPayload.testSuitesList.includes(selectedSuite._id)) {
+      settestplanPayload(prevState => ({
+        ...prevState,
+        testSuitesList: [...prevState.testSuitesList, selectedSuite._id]
+      }));
+    }
+  };
+
+  const handleCreateTestplan = async () => {
+    const url = BACKEND_URL + '/test-manager/testplan/create'
+    let payload = testplanPayload
+    const data = await post(url, payload)
+
+    if (data && data?.success === true) {
+      dispatch(showSnackBar({ msg: "Create Testplan Success", type: "success" }))
+    } else {
+
+      dispatch(showSnackBar({ msg: `Create Testplan Fail ${data.exception_reason}`, type: "error" }))
+    }
   }
+  const handleDeleteTestplan = () => {
+    console.warn(testplanPayload)
+  }
+  const handleUpdateTestplan = () => {
+    console.warn(testplanPayload)
+  }
+
+  const [tabvalue, setTabValue] = useState(0);
+
+  const handleTabChange = (event, newValue) => {
+    setTabValue(newValue);
+  };
+
   return (
     <ContentBox>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <button className='btn btn-sm bg-blue'>Create a Testplan</button>
-        </Grid>
-        <Grid item xs={2}>
-          <Select
-            labelId="suite"
-            id="suite"
-            value={selectedTestplan.name}
-            label="Suite"
-            size='small'
-            onChange={handleTestplanChange}
-          >
-            <MenuItem value="None">
-              <em>None</em>
-            </MenuItem>
-            {
-              testplanList.map((suite) => {
-                return <MenuItem value={suite.name}>{suite.name}</MenuItem>
-              })
-            }
-          </Select>
-        </Grid>
-        <Grid item xs={2}>
-          <button className='btn btn-sm bg-blue'>Execute Testplan</button>
-        </Grid>
-        <Grid item xs={12}>
-          <table class="table table-sm mb-0 table-striped table-dashboard fs--1 data-table border-bottom border-200" data-options='{"searching":false,"responsive":false,"info":false,"lengthChange":false,"sWrapper":"falcon-data-table-wrapper","dom":"<&#39;row mx-1&#39;<&#39;col-sm-12 col-md-6&#39;l><&#39;col-sm-12 col-md-6&#39;f>><&#39;table-responsive&#39;tr><&#39;row no-gutters px-1 py-3 align-items-center justify-content-center&#39;<&#39;col-auto&#39;p>>","language":{"paginate":{"next":"<span class=\"fas fa-chevron-right\"></span>","previous":"<span class=\"fas fa-chevron-left\"></span>"}}}'>
-            <thead class="bg-200 text-900">
-              <tr>
-                <th class="align-middle no-sort">
-                  <div class="custom-control custom-checkbox">
-                    <input className="form-check-input" type="checkbox" value="" name='master_checkbox' id="flexCheckDefault" onChange={(e) => handleMasterCheckBoxChange(e)} />
-                  </div>
-                </th>
-                <th class="align-middle sort">Suite</th>
-                <th class="align-middle sort">Name</th>
-                <th class="align-middle sort">Description</th>
-                <th class="align-middle sort">Joined</th>
-                <th class="no-sort">Actions</th>
-              </tr>
-            </thead>
-            <tbody id="testplan">
+      <h6 className='text-blue'>Testplan Management</h6>
+      <Tabs defaultActiveKey="1" onChange={handleTabChange}>
+        {/* TabPane for the first tab */}
+        <TabPane tab="Testplan Handler" key="1">
+          <Grid container spacing={2} className='mb-4'>
+            <Grid item xs={2}>
+              <FormControl fullWidth>
+                <Autocomplete
+                  id="free-solo-demo"
+                  freeSolo
+                  size='small'
+                  value={testplanPayload.name}
+                  onChange={handleTestplanInputChange}
+                  onInputChange={handleTestplanInputChange}
+                  options={testplanList.map((testplan) => testplan.name)}
+                  renderInput={(params) => <TextField {...params} size='small' label="Test Plan" />}
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={2}>
+              <TextField
+                label="Testplan Description"
+                size="small"
+                name='description'
+                value={testplanPayload.description}
+                fullWidth
+                onChange={(e) => settestplanPayload({ ...testplanPayload, description: e.target.value })}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlLabel
+                control={
+                  <Switch
+                    size="small"
+                    label="Active"
+                    name='isActive'
+                    checked={testplanPayload.isActive}
+                    onChange={(e) => onChangeForm(e)}
+                    value={testplanPayload.isActive ? "off" : "on"}
+                    inputProps={{ 'aria-label': 'controlled' }}
+                  />
+                }
+                label="Active"
+              />
+            </Grid>
+            <Grid item xs={2}>
+              <FormControl fullWidth>
+                <Autocomplete
+                  id="free-solo-demo"
+                  freeSolo
+                  size='small'
+                  value={suitename}
+                  onChange={handlesuitenameChange}
+                  onInputChange={handleSuiteInputChange}
+                  options={suiteList.map((suite) => suite.name)}
+                  renderInput={(params) => <TextField {...params} size='small' label="Test Suite" />}
+                />
+              </FormControl>
+              <Button className='mt-1' onClick={appendToSuiteList}>{'Add To Suite'}</Button>
+            </Grid>
+            <Grid item xs={12}>
               {
-                selectedTestplan?.testList.map((item, index) => (
-                  <tr class="btn-reveal-trigger">
-                    <td class="py-2 align-middle">
-                      <div class="custom-control custom-checkbox">
-                        <input className="form-check-input" type="checkbox" value="" name='child_checkbox' id="flexCheckDefault" onChange={(e) => handleCheckBoxChange(e, item)} />
-                      </div>
-                    </td>
-                    <td class="py-2 align-middle white-space-nowrap customer-name-column"><a href="../pages/customer-details.html">
-                      <div class="media d-flex align-items-center">
-                        <div class="avatar avatar-xl mr-2">
-                          <div class="avatar-name rounded-circle"><span><img src={item.avatar}></img></span></div>
-                        </div>
-                        <div class="media-body">
-                          <h5 class="mb-0 fs--1">{item.firstName}</h5>
-                        </div>
-                      </div>
-                    </a></td>
-                    <td class="py-2 align-middle"><a href={`mailto:${item.email}`}>{item.email}</a></td>
-                    <td class="py-2 align-middle white-space-nowrap"> <a href="tel:2012001851">(91) {item.phoneNumber} </a></td>
-                    <td class="py-2 align-middle">30/03/2018</td>
-                    <td class="py-2 align-middle">{item.role}</td>
-                    <td class="py-2 align-middle">
-                      {item.active ? <span class="badge badge-success rounded-pill d-inline">Active</span> :
-                        <span class="badge badge-danger rounded-pill d-inline">Not Active</span>
-                      }</td>
-                    <td class="py-2 align-middle">
+                testplanPayload?.testSuitesList.length > 0 &&
+                <div style={{ maxHeight: "450px", overflowX: "auto" }}>
+                  <table class="table align-middle mb-0 bg-white border">
+                    <thead class="bg-light">
+                      <tr>
+                        <th class="align-middle no-sort">
+                          <div class="custom-control custom-checkbox">
+                            <input className="form-check-input" type="checkbox" value="" name='master_checkbox' id="flexCheckDefault"
+                            // onChange={(e) => handleMasterCheckBoxChange(e)} 
+                            />
+                          </div>
+                        </th>
+                        <th class="align-middle sort">Name</th>
+                        <th class="align-middle sort">Description</th>
+                        <th class="align-middle sort">Testcase Count</th>
+                        <th class="align-middle sort">Testcases</th>
+                        <th class="align-middle sort">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
                       {
-                        item.verified ? <span class="badge badge-success rounded-pill d-inline">Verified</span> :
-                          <span class="badge badge-danger rounded-pill d-inline">Not Verified</span>
-                      }
-                    </td>
-                    <td class="py-2 align-middle white-space-nowrap">
-                      <div class="dropdown">
-                        <button
-                          class="btn btn-link btn-sm btn-reveal dropdown-toggle"
-                          type="button"
-                          id={`dropdownbtn_${index}`}
-                          data-mdb-toggle="dropdown"
-                          aria-expanded="false"
-                        >
-                          <span class="fas fa-ellipsis-h fs--1"></span>
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby={`dropdownbtn_${index}`}>
-                          <li><a class="dropdown-item" href="#" onClick={() => handleEdit(item)}>Edit</a></li>
-                          <li><a class="dropdown-item" href="#" onClick={() => handleOpenDialog(item)}>Delete</a></li>
-                        </ul>
-                      </div>
-                    </td>
-                  </tr>
-                ))
-              }
+                        testplanPayload?.testSuitesList.map((suiteId) => {
+                          let suite = suiteList.find(obj => obj._id === suiteId)
+                          return <tr>
+                            <td class="align-middle no-sort">
+                              <div class="custom-control custom-checkbox">
+                                <input className="form-check-input" type="checkbox" value="" name='master_checkbox' id="flexCheckDefault"
+                                // onChange={(e) => handleMasterCheckBoxChange(e)} 
+                                />
+                              </div>
+                            </td>
+                            <td class="align-middle sort">{suite.name}</td>
+                            <td class="align-middle sort">{suite.description}</td>
+                            <td class="align-middle sort">{suite.testcasesList.length}</td>
+                            <td class="align-middle sort">{suite.testcasesList.length}</td>
+                            <td class="align-middle sort"><Button onClick={() => removeFromTestcasesList(suiteId)}><DeleteIcon /></Button></td>
+                          </tr>
+                          // return suite?.testcasesList.map((id) => {
+                          //   let testcase = testcaseList.find(obj => obj._id === id)
+                          //   return <tr>
+                          //     <td>
+                          //       <div class="d-flex align-items-center">
+                          //         <div class="custom-control custom-checkbox">
+                          //           <input className="form-check-input" type="checkbox" value="" name='master_checkbox' id="flexCheckDefault"
+                          //           // onChange={(e) => handleMasterCheckBoxChange(e)} 
+                          //           />
+                          //         </div>
+                          //       </div>
+                          //     </td>
+                          //     <td>
+                          //       <p class="fw-normal mb-1">{suite?.name}</p>
+                          //     </td>
+                          //     <td>
+                          //       <p>{testcase.name}</p>
+                          //     </td>
+                          //     <td>{testcase.description}</td>
+                          //     <td>
+                          //       <span class={`badge badge-${stateColorMap[testcase.state]} rounded-pill d-inline me-2`}>{String(testcase.state).toLocaleUpperCase()}</span>
+                          //     </td>
+                          //     <td>
+                          //       <Button onClick={() => removeFromTestcasesList(id)}><DeleteIcon /></Button>
+                          //     </td>
+                          //   </tr>
+                          // })
 
-            </tbody>
-          </table>
-        </Grid>
-      </Grid>
+                        })
+                      }
+                    </tbody>
+                  </table>
+                </div>
+              }
+            </Grid>
+          </Grid>
+          <Grid container spacing={2}>
+            {
+              testplanPayload?._id && testplanPayload?.name != "" ?
+                <Grid item xs={12}>
+                  <LoadingButton
+                    variant="contained"
+                    size='small'
+                    color="primary"
+                    className='bg-blue me-2'
+                    startIcon={<SaveIcon />}
+                  // onClick={() => handleCreateSuite()}
+                  >
+                    Update Testplan
+                  </LoadingButton>
+                  <LoadingButton
+                    variant="contained"
+                    size='small'
+                    // color="danger"
+                    className='bg-pink'
+                    startIcon={<DeleteIcon />}
+                  // onClick={() => handleDeleteSuite()}
+                  >
+                    Delete Testplan
+                  </LoadingButton>
+                </Grid> : <Grid item xs={12}>
+                  <LoadingButton
+                    variant="contained"
+                    size='small'
+                    color="primary"
+                    className='bg-blue me-2'
+                    startIcon={<SaveIcon />}
+                    onClick={() => handleCreateTestplan()}
+                    disabled={testplanPayload?.name === ""}
+                  >
+                    Save Testplan
+                  </LoadingButton>
+                </Grid>
+            }
+          </Grid>
+
+        </TabPane>
+        {/* TabPane for the second tab */}
+        <TabPane tab="Testplan Execution" key="2">
+
+        </TabPane>
+      </Tabs>
+
     </ContentBox>
   )
 }

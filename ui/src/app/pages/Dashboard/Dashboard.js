@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ContentBox } from '../../styles/AppStyles'
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -15,9 +15,11 @@ import {
   ArcElement,
   registerables
 } from 'chart.js'
-
 import { Bar, Doughnut, Line } from 'react-chartjs-2';
-import { Grid } from '@mui/material';
+import { Button, Grid } from '@mui/material';
+import Drawer from '@mui/material/Drawer';
+import { useDispatch } from 'react-redux';
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -40,6 +42,9 @@ const Item = styled(Paper)(({ theme }) => ({
 
 
 const Dashboard = () => {
+  const dispatch = useDispatch()
+  const anchor = "right"
+  const [toggleDrawer, setToggleDrawer] = useState(false)
   const nooftests = {
     labels: ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
     datasets: [{
@@ -64,27 +69,52 @@ const Dashboard = () => {
       borderWidth: 4
     }]
   }
+  const handletoggleDrawerChange = (anchor, open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+    setToggleDrawer(!toggleDrawer);
+  }
+
+  useEffect(() => {
+
+  }, [])
+
   return (
     <ContentBox>
-      <Box sx={{ flexGrow: 1 }}>
-        <h6 className='text-blue'>Analytics</h6>
-        <div class="col-lg-6 pl-lg-2 mb-3">
-          <div class="card h-lg-100">
-            <div class="card-header">
-              <div class="row flex-between-center">
-                <div class="col-auto">
-                  <h6 class="mb-0">Test Campaigns</h6>
+      <h6 className='text-blue'>Analytics</h6><br />
+      <Grid container spacing={2} sx={{ marginBottom: 1 }}>
+        <Grid item xs={12}>
+          <div class="col-lg-6 pl-lg-2 mb-3">
+            <div class="card h-lg-100">
+              <div class="card-header">
+                <div class="row flex-between-center">
+                  <div class="col-auto">
+                    <h6 class="mb-0">Test Campaigns</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body h-100 pr-0">
+                <div class="echart-line-total-sales h-100" data-echart-responsive="true">
+                  <Line data={nooftests} width={500} height={250} />
                 </div>
               </div>
             </div>
-            <div class="card-body h-100 pr-0">
-              <div class="echart-line-total-sales h-100" data-echart-responsive="true">
-                <Line data={nooftests} width={500} height={250} />
-              </div>
-            </div>
           </div>
-        </div>
-      </Box>
+        </Grid>
+        <Grid item xs={2}>
+          <React.Fragment key={anchor}>
+            <Button onClick={handletoggleDrawerChange(anchor, true)} className='mt-1'>Last Execution Result</Button>
+            <Drawer
+              anchor={anchor}
+              open={toggleDrawer}
+              onClose={handletoggleDrawerChange(anchor, false)}
+            >
+
+            </Drawer>
+          </React.Fragment>
+        </Grid>
+      </Grid>
     </ContentBox >
   )
 }

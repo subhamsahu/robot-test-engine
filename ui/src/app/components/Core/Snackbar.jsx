@@ -17,7 +17,6 @@ const Snackbar = ({ type, message }) => {
     const dispatch = useDispatch()
     const snackBar = useSelector(state => state.snackBarStateData)
 
-    console.log(snackBar)
 
     const [open, setOpen] = React.useState(false);
 

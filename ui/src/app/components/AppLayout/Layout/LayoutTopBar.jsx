@@ -85,7 +85,6 @@ const LayoutTopBar = () => {
 
     const handleSidebarToggle = () => {
         let { layoutSettings } = settings;
-        console.log(layoutSettings)
         let mode;
         if (isMdScreen) {
             mode = layoutSettings.leftSidebar.mode === 'close' ? 'mobile' : 'close';

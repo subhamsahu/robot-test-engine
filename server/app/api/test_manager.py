@@ -6,6 +6,7 @@ import time
 import json
 import os
 import sys
+
 from app.core.log import log
 from app.core.constants import API_PREFIX
 from app.controllers.test_manager import TestManagerService
@@ -44,9 +45,9 @@ def delete_suite():
     :rtype: tuple
     """
     try:
-        payload = request.get_json()
-        data= test_manager_controller_obj.delete_suite(payload)
-        return success_response(status=202, data=data), 202
+        id = request.args['id']
+        data= test_manager_controller_obj.delete_suite(id)
+        return success_response(status=202, data=None), 202
     except BadRequestException as e:
         return error_response(400,str(e)), 400
     except Exception as e:
@@ -77,9 +78,8 @@ def create_testcase():
 @test_manager.route('/testcase/delete', methods=['DELETE'])
 def delete_testcase():
     try:
-        testcasename = request.args['testcasename']
-        log.log_console(testcasename)
-        data= test_manager_controller_obj.delete_testcase(testcasename)
+        id = request.args['id']
+        data= test_manager_controller_obj.delete_testcase(id)
         return success_response(status=200, data=None), 200
     except BadRequestException as e:
         return error_response(400,str(e)), 400
@@ -90,6 +90,38 @@ def delete_testcase():
 def list_testcase():
     try:
         data= test_manager_controller_obj.list_testcase()
+        return success_response(status=200, data=data), 200
+    except BadRequestException as e:
+        return error_response(400,str(e)), 400
+    except Exception as e:
+        return error_response(500,str(e)), 500
+@test_manager.route('/testplan/create', methods=['POST'])
+def create_testplan():
+    try:
+        payload = request.get_json()
+        log.log_console(payload)
+        data= test_manager_controller_obj.create_testplan(payload)
+        return success_response(status=201, data=None), 201
+    except BadRequestException as e:
+        return error_response(400,str(e)), 400
+    except Exception as e:
+        return error_response(500,str(e)), 500
+    
+@test_manager.route('/testplan/delete', methods=['DELETE'])
+def delete_testplan():
+    try:
+        id = request.args['id']
+        data= test_manager_controller_obj.delete_testplan(id)
+        return success_response(status=200, data=None), 200
+    except BadRequestException as e:
+        return error_response(400,str(e)), 400
+    except Exception as e:
+        return error_response(500,str(e)), 500
+
+@test_manager.route('/testplan/list', methods=['GET'])
+def list_testplan():
+    try:
+        data= test_manager_controller_obj.list_testplan()
         return success_response(status=200, data=data), 200
     except BadRequestException as e:
         return error_response(400,str(e)), 400

@@ -15,7 +15,6 @@ const CSVViewer = (props) => {
   const dataSource = file_data_from_store.file_contents
   const rows = dataSource.split('\n');
   let cols = rows[0];
-  console.log(cols)
   cols = cols.split(',');
   const rowsObj = rows.map((row) => {
     const vals = row.split(',');
@@ -25,7 +24,6 @@ const CSVViewer = (props) => {
       return res;
     }, {});
   });
-  console.log(rowsObj)
   return (
     <div>
       <div>

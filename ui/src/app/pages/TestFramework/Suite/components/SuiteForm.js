@@ -39,11 +39,9 @@ const SuiteForm = () => {
         const url = BACKEND_URL + '/test-manager/suite/create'
         let payload = suitePayload
         const data = await post(url, payload)
-        console.log(data)
         if (data && data?.success === true) {
             dispatch(showSnackBar({ msg: "Create Suite Success", type: "success" }))
         } else {
-            console.log(data)
             dispatch(showSnackBar({ msg: `Create Suite Fail ${data.exception_reason}`, type: "error" }))
         }
     }

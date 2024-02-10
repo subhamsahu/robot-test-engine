@@ -2,14 +2,18 @@ import os
 import csv
 import io
 import json
+from bson.objectid import ObjectId
+
 from app.core.exceptions import APPException
 from app.core.log import log
 from app.db.mongodb_connection import mongo_client
 from app.core.constants import SERVER_PATH
+from app.utils.utility import Utility
 
 db = mongo_client['TestFrameworkDb']
 suite_coll = db['suites']
 testcases_coll = db['testcases']
+testplan_coll = db['testplans']
 robot_api_coll = db['robot_api']
 
 class TestManagerService:
@@ -46,12 +50,11 @@ class TestManagerService:
         data = suite_coll.insert_one(payload)
         return data
 
-    def delete_suite(self, payload: dict) -> dict:
-        """
-        Delete a test suite.
+    def delete_suite(self, id: str) -> dict:
+        """Deletes a test suite.
 
         Args:
-            payload (dict): The payload containing the name of the test suite to be deleted.
+            id (str): The id of the test suite to be deleted.
 
         Raises:
             Exception: If the test suite does not exist.
@@ -59,15 +62,13 @@ class TestManagerService:
         Returns:
             dict: The deleted document.
         """
-        query = {
-            'name': payload.name
-        }
-        existing_document = suite_coll.find_one(
-            query
-        )
+        query = {"_id": ObjectId(id)}
+        existing_document = suite_coll.find_one(query)
         if not existing_document:
             raise Exception("Suite Doesn't Exist")
-        data = suite_coll.find_one_and_delete(query)
+        data = Utility.convert_mongo_document_to_dict(
+            suite_coll.find_one_and_delete(query)
+        )
         return data
 
     def list_suite(self) -> list:
@@ -77,8 +78,9 @@ class TestManagerService:
         Returns:
             list: A list of all test suites.
         """
-        data = list(suite_coll.find({}, {'_id': False}))
-        return data
+        data = list(suite_coll.find({}))
+        list_of_suites = Utility.convert_mongo_document_list_to_dict(data)
+        return list_of_suites
 
     def create_testcase(self, payload: dict) -> dict:
         """
@@ -103,7 +105,7 @@ class TestManagerService:
         data = testcases_coll.insert_one(payload)
         return data
 
-    def delete_testcase(self, testcasename: str) -> None:
+    def delete_testcase(self, id: str) -> None:
         """
         Delete a test case.
 
@@ -116,18 +118,11 @@ class TestManagerService:
         Returns:
             None: Returns nothing.
         """
-        existing_document = testcases_coll.find_one(
-            {
-                'name': testcasename,
-            }
-        )
+        query = {"_id": ObjectId(id)}
+        existing_document = testcases_coll.find_one(query)
         if not existing_document:
             raise Exception("Testcase Not Exist")
-        data = testcases_coll.delete_one(
-            {
-                'name': testcasename,
-            }
-        )
+        data = testcases_coll.delete_one(query)
         return data
 
     def list_testcase(self) -> list:
@@ -137,8 +132,63 @@ class TestManagerService:
         Returns:
             list: A list of all test cases.
         """
-        data = list(testcases_coll.find({}, {'_id': False}))
+        # data = list(testcases_coll.find({}))
+        data = testcases_coll.find({})
+        list_of_testcases= Utility.convert_mongo_document_list_to_dict(data)
+        return list_of_testcases
+    def create_testplan(self, payload: dict) -> dict:
+        """
+        Create a new test plan.
+
+        Args:
+            payload (dict): The payload containing the necessary information for creating a test plan.
+
+        Raises:
+            Exception: If a test plan with the same name already exists.
+
+        Returns:
+            dict: The inserted document.
+        """
+        existing_document = testplan_coll.find_one(
+            {
+                "name": payload.get("name", None),
+            }
+        )
+        if existing_document:
+            raise Exception("Testcase Already Exist")
+        data = testplan_coll.insert_one(payload)
         return data
+
+    def delete_testplan(self, id: str) -> None:
+        """
+        Deletes a test plan.
+
+        Args:
+            id (str): The id of the test plan to be deleted.
+
+        Raises:
+            Exception: If the test plan does not exist.
+
+        Returns:
+            None: Returns nothing.
+        """
+        query = {"_id": ObjectId(id)}
+        existing_document = testplan_coll.find_one(query)
+        if not existing_document:
+            raise Exception("Testcase Not Exist")
+        data = testplan_coll.delete_one(query)
+        return data
+
+    def list_testplan(self) -> list:
+        """
+        List all test plans.
+
+        Returns:
+            list: A list of all test plans.
+        """
+        data = testplan_coll.find({})
+        list_of_testplans= Utility.convert_mongo_document_list_to_dict(data)
+        return list_of_testplans
 
     def create_robot_api_list(self) -> None:
         """

@@ -127,3 +127,35 @@ export const uploadImage = async (url, formData) => {
     return data
 }
 
+export const call = async (url, method = 'GET', data = null, params = {}) => {
+    try {
+        if (Object.keys(params).length != 0) {
+            const searchParams = new URLSearchParams();
+    
+            // Loop through the params object and append each key-value pair to the URLSearchParams
+            for (const [key, value] of Object.entries(params)) {
+                searchParams.append(key, value);
+            }
+    
+            // Append the serialized parameters to the URL
+            url += '?' + searchParams.toString();
+        }
+        const headers = generateGlobalHeader()
+        const response = await axios({
+            method,
+            url: url,
+            data,
+            headers,
+        });
+
+        // You can handle the response data here
+        console.log('Response:', response.data);
+
+        return response.data;
+    } catch (error) {
+        // Handle errors here
+        console.error('Error:', error.message);
+        throw error;
+    }
+}
+

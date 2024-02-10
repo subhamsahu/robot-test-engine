@@ -12,7 +12,6 @@ const ROBOTApiForm = ({ selectedAPI, handleCodeChange }) => {
     const [enableSaveButton, setEnableSaveButton] = useState(false); 
     const [returnValue, setReturnValue] = useState('')
     const createRobotExpression = ()=>{
-        console.log(api)
         let expression = ''
         api.args.map((arg)=> arg.value ? expression =  `${expression}  ${arg.name}=${arg.value}`: '')
         expression = returnValue !='' ? `\n$${returnValue}= ${api.keyword}  ${expression}` : `\n${api.keyword}  ${expression}`

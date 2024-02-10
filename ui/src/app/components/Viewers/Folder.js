@@ -13,13 +13,11 @@ function Folder({ explorer, setfileStateCallback, restURL }) {
         window.addEventListener('click', handleClick);
         return () => window.removeEventListener('click', handleClick);
     }, []);
-    console.log(restURL)
     const sendObjectForDetail = async (obj) => {
         if (restURL == undefined) {
             return
         }
         let data = await getFileDetails(restURL, obj.name)
-        console.log(data)
         setfileStateCallback(data)
     }
     return (

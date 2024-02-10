@@ -2,7 +2,6 @@ import React from 'react'
 
 const HTMLViewer = ({file_path,restURL}) => { 
     let iframeSrc = restURL + `/fileexplorer/get_html_file?file_path=${file_path}`
-    console.log(iframeSrc)
     return (
         <div className='card'>
             <div className='card-body'>

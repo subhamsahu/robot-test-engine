@@ -9,7 +9,6 @@ const initialState = {
 export const snackBarStateData = (snackBarState = initialState, action) => {
     switch (action.type) {
         case SHOW_SNACKBAR:
-            console.log("SHOW here",action.payload)
             snackBarState = {
                 show:true,
                 msg:action.payload.msg,
@@ -17,7 +16,6 @@ export const snackBarStateData = (snackBarState = initialState, action) => {
             }
             return snackBarState
         case HIDE_SNACKBAR:
-            console.log("HIDE here",action.payload)
             snackBarState= {
                 show: false,
                 msg: "",

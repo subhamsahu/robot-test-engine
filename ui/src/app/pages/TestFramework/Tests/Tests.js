@@ -9,6 +9,10 @@ import MonacoEditor from 'react-monaco-editor';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import Stack from '@mui/material/Stack';
+import { Tabs } from 'antd';
+import PreviewIcon from '@mui/icons-material/Preview';
+import { Box, Icon } from '@mui/material';
+
 
 import { ContentBox } from '../../../styles/AppStyles'
 import ROBOTApiForm from './components/ROBOTApiForm'
@@ -16,22 +20,41 @@ import { get, post, remove } from '../../../services/api';
 import { BACKEND_URL } from '../../../core/constants';
 import { useDispatch } from 'react-redux';
 import { showSnackBar } from '../../../redux/actions/snackBarActions';
-import { ConditionLoopControls } from './components/Constants';
+import { ConditionLoopControls, TestcaseStates, initCode, stateColorMap } from './components/Constants';
+import { setTestcaseList } from '../../../redux/actions/testcaseAction';
+
+// Destructure the Tab component from Tabs
+const { TabPane } = Tabs;
+
+const createPayload = {
+  'name': 'sample',
+  'description': 'sample description',
+  'state': 'scripting',
+  'body': initCode,
+  'keywords': []
+}
+
 
 const Tests = () => {
   const dispatch = useDispatch()
   const editorRef = useRef(null);
   const [editorCursorPosition, setEditorCursorPostion] = useState(0)
-  const [testcaseList, setTestcaseList] = useState([
+
+  const [testcaseList, settestcaselist] = useState([
 
   ]);
-  const [testcasename, setTestcasename] = useState('')
+
+  const [testcasepayload, settestcasepayload] = useState(createPayload)
+
   const [selectedTestcase, setSelectedTestcase] = useState(null)
+
   const [robotAPIList, setrobotAPIList] = useState([]);
   const [selectedRobotAPI, setselectedRobotAPI] = useState('None')
-  const [selectedAPI, setselectedAPI] = useState(null)
+
   const [customAPIList, setcustomAPIList] = useState([]);
   const [selectedCustomAPI, setselectedCustomAPI] = useState('None')
+
+  const [selectedAPI, setselectedAPI] = useState(null)
   const [selectedLoopConditionControl, setSelectedLoopConditionControl] = useState({
     "keyword": "FOR",
     "body": "\nFOR    ${INDEX}    IN RANGE    2    5\n\t<statement>\nEND"
@@ -47,11 +70,11 @@ const Tests = () => {
     const url = BACKEND_URL + '/test-manager/robot-api/list'
     let params = {}
     const data = await get(url, params)
-    console.log(data)
+    
     if (data && data?.success === true) {
       setrobotAPIList(data?.data)
     } else {
-      dispatch(showSnackBar({ msg: `Create User Fail ${data.exception_reason}`, type: "error" }))
+      dispatch(showSnackBar({ msg: `Fetch Robot API List Fail ${data.exception_reason}`, type: "error" }))
     }
   }
 
@@ -59,11 +82,12 @@ const Tests = () => {
     const url = BACKEND_URL + '/test-manager/testcase/list'
     let params = {}
     const data = await get(url, params)
-    console.log(data)
+    
     if (data && data?.success === true) {
-      setTestcaseList(data?.data)
+      settestcaselist(data?.data)
+      dispatch(setTestcaseList(data.data))
     } else {
-      dispatch(showSnackBar({ msg: `Create User Fail ${data.exception_reason}`, type: "error" }))
+      dispatch(showSnackBar({ msg: `Fetch Testcases Fail ${data.exception_reason}`, type: "error" }))
     }
   }
 
@@ -72,20 +96,20 @@ const Tests = () => {
   }, []);
 
   const editorDidMount = (editor, monaco) => {
-    console.log('editorDidMount', editor);
     const cursorPosition = editor.getPosition();
-    console.log('Initial cursor position:', cursorPosition);
     editorRef.current = { editor, monaco };
     editor.onDidChangeCursorSelection((event) => {
       const cursorPosition = event.selection;
       setEditorCursorPostion(cursorPosition.startLineNumber)
     });
   };
-  const initCode = '[Documentation]  Test Documentation\n[Tags]  Tag1  Tag2\n\n'
-  const [code, setCode] = useState(initCode);
 
   const handleCodeChange = (newCode) => {
-    setCode(newCode);
+    // setCode(newCode);
+    settestcasepayload(prevState => ({
+      ...prevState,
+      body: newCode
+    }));
   };
 
   const handleAppendToCode = (newCode) => {
@@ -104,10 +128,18 @@ const Tests = () => {
       currentContent.splice(lineNumber - 1, 0, newText);
 
       // Set the modified content back to the editor
-      editor.setValue(currentContent.join('\n'));
+      // editor.setValue(currentContent.join('\n'));
+      settestcasepayload(prevState => ({
+        ...prevState,
+        body: currentContent.join('\n')
+      }));
     }
     else {
-      setCode(code + newCode)
+      // setCode(code + newCode)
+      settestcasepayload(prevState => ({
+        ...prevState,
+        body: prevState.body + newCode
+      }));
     }
   }
 
@@ -126,39 +158,32 @@ const Tests = () => {
   }
 
   const handleLoopConditionControlSelection = (e) => {
-    console.log(e.target.value)
     let selectedObj = ConditionLoopControls.find(obj => obj.keyword === e.target.value);
-    console.log(selectedObj)
     setSelectedLoopConditionControl(selectedObj)
   }
 
   const handleCreateTestcase = async () => {
-    let test_data = {
-      'name': testcasename,
-      'body': code,
-      'keywords': []
-    }
     const url = BACKEND_URL + '/test-manager/testcase/create'
-    let payload = test_data
+    let payload = testcasepayload
     const data = await post(url, payload)
-    console.log(data)
+    
     if (data && data?.success === true) {
       dispatch(showSnackBar({ msg: "Create Testcase Success", type: "success" }))
       fetchTestcaseList()
       resetThings()
     } else {
-      console.log(data)
+      
       dispatch(showSnackBar({ msg: `Create Testcase Fail ${data.exception_reason}`, type: "error" }))
     }
   }
 
   const handleDeleteTestcase = async () => {
     let params = {
-      'testcasename': testcasename,
+      'id': testcasepayload._id,
     }
     const url = BACKEND_URL + '/test-manager/testcase/delete'
     const data = await remove(url, params)
-    console.log(data)
+    
     if (data && data?.success === true) {
       dispatch(showSnackBar({ msg: "Delete Testcase Success", type: "success" }))
       fetchTestcaseList()
@@ -170,195 +195,306 @@ const Tests = () => {
 
   const handleSaveTestcase = async () => {
     let test_data = {
-      'name': testcasename,
-      'body': code,
+      'name': testcasepayload.name,
+      'body': testcasepayload.body,
       'keywords': []
     }
     // const url = BACKEND_URL + '/test-manager/testcase/create'
     // let payload = test_data
     // const data = await post(url, payload)
-    // console.log(data)
+    // 
     // if (data && data?.success === true) {
     //   dispatch(showSnackBar({ msg: "Create Testcase Success", type: "success" }))
     // } else {
-    //   console.log(data)
+    //   
     //   dispatch(showSnackBar({ msg: `Create Testcase Fail ${data.exception_reason}`, type: "error" }))
     // }
   }
 
   const handleChange = (event, newValue) => {
-    setTestcasename(newValue);
+    settestcasepayload(prevState => ({
+      ...prevState,
+      name: newValue
+    }));
   };
 
   const handleInputChange = (event, newInputValue) => {
     // This will be triggered when the user types
-    setTestcasename(newInputValue);
-    console.log(newInputValue)
+    settestcasepayload(prevState => ({
+      ...prevState,
+      name: newInputValue
+    }));
     let selectedObj = testcaseList.find(obj => obj.name === newInputValue);
     if (selectedObj) {
-      setCode(selectedObj.body)
+      // setCode(selectedObj.body)
       setSelectedTestcase(selectedObj)
+      settestcasepayload(selectedObj);
     }
     else {
-      setCode(initCode)
+      // setCode(initCode)
       setSelectedTestcase(null)
+      settestcasepayload(prevState => ({
+        ...prevState,
+        body: initCode
+      }));
     }
   };
 
-  const resetThings = ()=>{
-    setTestcasename('')
+  const resetThings = () => {
+    settestcasepayload(createPayload)
     setselectedRobotAPI('None')
     setselectedAPI(null)
     setselectedCustomAPI('None')
   }
 
+  const [tabvalue, setTabValue] = useState(0);
+
+  const handleTabChange = (event, newValue) => {
+    setTabValue(newValue);
+  };
+
 
   return (
     <ContentBox>
-      <h6 className='text-blue'>Testcase Management</h6><br/>
-      <Grid container spacing={2}>
-        <Grid item xs={2}>
-          <FormControl fullWidth>
-            <Autocomplete
-              id="free-solo-demo"
-              freeSolo
-              size='small'
-              value={testcasename}
-              onChange={handleChange}
-              onInputChange={handleInputChange}
-              options={testcaseList.map((testcase) => testcase.name)}
-              renderInput={(params) => <TextField {...params} size='small' label="Testcase" />}
-            />
-          </FormControl>
-        </Grid>
-        <Grid item xs={2}>
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">ROBOT APIs</InputLabel>
-            <Select
-              labelId="add_to_testcase"
-              id="add_to_testcase"
-              value={selectedRobotAPI}
-              label="Add To Testcase"
-              size='small'
-              onChange={(e) => handleAPISelection(e, 'robot')}
-            >
-              <MenuItem value="None">
-                <em>None</em>
-              </MenuItem>
-              {
-                robotAPIList.map((robotAPI) => {
-                  return <MenuItem value={robotAPI.keyword}>{robotAPI.keyword}</MenuItem>
-                })
-              }
-            </Select>
-          </FormControl>
-          {/* <Button className='mt-1' disabled={selectedRobotAPI == 'None'}>{'Add To Testcase'}</Button> */}
-        </Grid>
-        <Grid item xs={2}>
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Custom APIs</InputLabel>
-            <Select
-              labelId="add_to_testcase"
-              id="add_to_testcase"
-              value={selectedCustomAPI}
-              label="Add To Testcase"
-              size='small'
-              onChange={(e) => handleAPISelection(e, 'custom')}
-            >
-              <MenuItem value="None">
-                <em>None</em>
-              </MenuItem>
-              {
-                customAPIList.map((customAPI) => {
-                  return <MenuItem value={customAPI.keyword}>{customAPI.keyword}</MenuItem>
-                })
-              }
-            </Select>
-          </FormControl>
-          {/* <Button className='mt-1' disabled={selectedCustomAPI == 'None'}>{'Add To Testcase'}</Button> */}
-        </Grid>
-        <Grid item xs={2}>
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Custom Keywords</InputLabel>
-            <Select
-              labelId="add_to_testcase"
-              id="add_to_testcase"
-              value={"None"}
-              label="Add To Testcase"
-              size='small'
-            >
-              <MenuItem value="None">
-                <em>None</em>
-              </MenuItem>
-            </Select>
-          </FormControl>
-          {/* <Button className='mt-1'>{'Add To Testcase'}</Button> */}
-        </Grid>
-        <Grid item xs={2}>
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Loop/Conditions</InputLabel>
-            <Select
-              labelId="loop_conditions"
-              id="loopConditions"
-              value={selectedLoopConditionControl.keyword}
-              label="Add To Testcase"
-              size='small'
-              onChange={(e) => handleLoopConditionControlSelection(e)}
-            >
-              {
-                ConditionLoopControls.map((element) => {
-                  return <MenuItem value={element.keyword}>{element.keyword}</MenuItem>
-                })
-              }
-            </Select>
-          </FormControl>
-          <Button className='mt-1' onClick={() => handleAppendToCode(selectedLoopConditionControl.body)}>{'Add To Testcase'}</Button>
-        </Grid>
-      </Grid>
-      <Grid container spacing={2}>
-        <Grid item xs={8}>
-          <div className='border p-2'>
-            <Stack direction="row" spacing={2} justifyContent="space-between">
-              <h6 className='fw-bold'>Testcase Editor</h6>
-              <div>
+      <h6 className='text-blue'>Testcase Management</h6>
+      <Tabs defaultActiveKey="1" onChange={handleTabChange}>
+        {/* TabPane for the first tab */}
+        <TabPane tab="Testcase Handler" key="1">
+          <Box>
+            <Grid container spacing={2}>
+              <Grid item xs={2}>
+                <FormControl fullWidth>
+                  <Autocomplete
+                    id="free-solo-demo"
+                    freeSolo
+                    size='small'
+                    value={testcasepayload.name}
+                    onChange={handleChange}
+                    onInputChange={handleInputChange}
+                    options={testcaseList.map((testcase) => testcase.name)}
+                    renderInput={(params) => <TextField {...params} size='small' label="Testcase" />}
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item xs={2}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">ROBOT APIs</InputLabel>
+                  <Select
+                    labelId="add_to_testcase"
+                    id="add_to_testcase"
+                    value={selectedRobotAPI}
+                    label="Add To Testcase"
+                    size='small'
+                    onChange={(e) => handleAPISelection(e, 'robot')}
+                  >
+                    <MenuItem value="None">
+                      <em>None</em>
+                    </MenuItem>
+                    {
+                      robotAPIList.map((robotAPI) => {
+                        return <MenuItem value={robotAPI.keyword}>{robotAPI.keyword}</MenuItem>
+                      })
+                    }
+                  </Select>
+                </FormControl>
+                {/* <Button className='mt-1' disabled={selectedRobotAPI == 'None'}>{'Add To Testcase'}</Button> */}
+              </Grid>
+              <Grid item xs={2}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Custom APIs</InputLabel>
+                  <Select
+                    labelId="add_to_testcase"
+                    id="add_to_testcase"
+                    value={selectedCustomAPI}
+                    label="Add To Testcase"
+                    size='small'
+                    onChange={(e) => handleAPISelection(e, 'custom')}
+                  >
+                    <MenuItem value="None">
+                      <em>None</em>
+                    </MenuItem>
+                    {
+                      customAPIList.map((customAPI) => {
+                        return <MenuItem value={customAPI.keyword}>{customAPI.keyword}</MenuItem>
+                      })
+                    }
+                  </Select>
+                </FormControl>
+                {/* <Button className='mt-1' disabled={selectedCustomAPI == 'None'}>{'Add To Testcase'}</Button> */}
+              </Grid>
+              <Grid item xs={2}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Custom Keywords</InputLabel>
+                  <Select
+                    labelId="add_to_testcase"
+                    id="add_to_testcase"
+                    value={"None"}
+                    label="Add To Testcase"
+                    size='small'
+                  >
+                    <MenuItem value="None">
+                      <em>None</em>
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+                {/* <Button className='mt-1'>{'Add To Testcase'}</Button> */}
+              </Grid>
+              <Grid item xs={2}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Loop/Conditions</InputLabel>
+                  <Select
+                    labelId="loop_conditions"
+                    id="loopConditions"
+                    value={selectedLoopConditionControl.keyword}
+                    label="Add To Testcase"
+                    size='small'
+                    onChange={(e) => handleLoopConditionControlSelection(e)}
+                  >
+                    {
+                      ConditionLoopControls.map((element) => {
+                        return <MenuItem value={element.keyword}>{element.keyword}</MenuItem>
+                      })
+                    }
+                  </Select>
+                </FormControl>
+                <Button className='mt-1' onClick={() => handleAppendToCode(selectedLoopConditionControl.body)}>{'Add To Testcase'}</Button>
+              </Grid>
+              <Grid item xs={2}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Testcase State</InputLabel>
+                  <Select
+                    labelId="loop_conditions"
+                    id="testcasestate"
+                    value={testcasepayload.state}
+                    label="TestcaseState"
+                    size='small'
+                    onChange={(e) => settestcasepayload({ ...testcasepayload, state: e.target.value })}
+                  >
+                    {
+                      TestcaseStates.map((element) => {
+                        return <MenuItem value={element}>{element}</MenuItem>
+                      })
+                    }
+                  </Select>
+                </FormControl>
+              </Grid>
+            </Grid>
+            <Grid container spacing={2} className='mb-4'>
+              <Grid item xs={8}>
+                <FormControl fullWidth>
+                  <TextField
+                    id="outlined-basic"
+                    label="Testcase Description"
+                    variant="outlined"
+                    size='small'
+                    value={testcasepayload.description}
+                    onChange={(e) => settestcasepayload({ ...testcasepayload, description: e.target.value })}
+                  />
+                </FormControl>
+              </Grid>
+            </Grid>
+            <Grid container spacing={2}>
+              <Grid item xs={8}>
+                <div className='border p-2'>
+                  <Stack direction="row" spacing={2} justifyContent="space-between">
+                    <h6 className='fw-bold'>Testcase Editor</h6>
+                    <div>
+                      <span class={`badge badge-${stateColorMap[testcasepayload.state]} rounded-pill d-inline me-2`}>{String(testcasepayload.state).toLocaleUpperCase()}</span>
+                      {
+                        selectedTestcase ? <>
+                          <button
+                            className='btn btn-sm bg-blue me-2'
+                            onClick={() => handleSaveTestcase()}
+                          ><i class="fas fa-save"></i>
+                          </button>
+                          <button
+                            className='btn btn-sm bg-pink'
+                            onClick={() => handleDeleteTestcase()}
+                          ><i className="fas fa-trash"></i>
+                          </button></>
+                          : <button
+                            className='btn btn-sm bg-blue me-2'
+                            disabled={testcasepayload.name === ''}
+                            onClick={() => handleCreateTestcase()}
+                          ><i className="fas fa-save"></i></button>
+
+                      }
+
+                    </div>
+                  </Stack>
+                  <hr /><br />
+                  <MonacoEditor
+                    width="100%"
+                    height="500"
+                    language="python"  // Set the language of the code (e.g., javascript, python)
+                    theme="vs"       // Set the editor theme (e.g., vs, vs-dark)
+                    value={testcasepayload.body}
+                    onChange={handleCodeChange}
+                    editorDidMount={editorDidMount}
+                  />
+                </div>
+              </Grid>
+              <Grid item xs={4}>
+                {selectedAPI ? <ROBOTApiForm selectedAPI={selectedAPI} handleCodeChange={handleAppendToCode} /> : <></>}
+              </Grid>
+            </Grid>
+          </Box>
+        </TabPane>
+        {/* TabPane for the second tab */}
+        <TabPane tab="Testcase List" key="2">
+          {
+            testcaseList.length > 0 &&
+            <table class="table align-middle mb-0 bg-white border">
+              <thead class="bg-light">
+                <tr>
+                  <th class="align-middle no-sort">
+                    <div class="custom-control custom-checkbox">
+                      <input className="form-check-input" type="checkbox" value="" name='master_checkbox' id="flexCheckDefault"
+                      // onChange={(e) => handleMasterCheckBoxChange(e)} 
+                      />
+                    </div>
+                  </th>
+                  <th class="align-middle sort">Id</th>
+                  <th class="align-middle sort">Name</th>
+                  <th class="align-middle sort">Description</th>
+                  <th class="align-middle sort">Testcase Status</th>
+                  <th class="align-middle sort">View</th>
+                </tr>
+              </thead>
+              <tbody>
                 {
-                  selectedTestcase ? <>
-                    <button
-                      className='btn btn-sm bg-blue me-2'
-                      onClick={() => handleSaveTestcase()}
-                    ><i class="fas fa-save"></i>
-                    </button>
-                    <button
-                      className='btn btn-sm bg-pink'
-                      onClick={()=>handleDeleteTestcase()}
-                    ><i className="fas fa-trash"></i>
-                    </button></>
-                    : <button
-                      className='btn btn-sm bg-blue me-2'
-                      // disabled={testcasename != ''}
-                      onClick={() => handleCreateTestcase()}
-                    ><i className="fas fa-plus"></i></button>
-
+                  testcaseList.map((testcase) =>
+                    <tr>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <div class="custom-control custom-checkbox">
+                            <input className="form-check-input" type="checkbox" value="" name='master_checkbox' id="flexCheckDefault"
+                            // onChange={(e) => handleMasterCheckBoxChange(e)} 
+                            />
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="fw-normal mb-1">{testcase._id}</p>
+                      </td>
+                      <td>
+                        <p>{testcase.name}</p>
+                      </td>
+                      <td>{testcase.description}</td>
+                      <td>
+                        <span class={`badge badge-${stateColorMap[testcase.state]} rounded-pill d-inline me-2`}>{String(testcase.state).toLocaleUpperCase()}</span>
+                      </td>
+                      <td>
+                        <Button><PreviewIcon /></Button>
+                      </td>
+                    </tr>)
                 }
+              </tbody>
+            </table>
+          }
+        </TabPane>
+      </Tabs>
 
-              </div>
-            </Stack>
-            <hr /><br />
-            <MonacoEditor
-              width="100%"
-              height="500"
-              language="python"  // Set the language of the code (e.g., javascript, python)
-              theme="vs"       // Set the editor theme (e.g., vs, vs-dark)
-              value={code}
-              onChange={handleCodeChange}
-              editorDidMount={editorDidMount}
-            />
-          </div>
-        </Grid>
-        <Grid item xs={4}>
-          {selectedAPI ? <ROBOTApiForm selectedAPI={selectedAPI} handleCodeChange={handleAppendToCode} /> : <></>}
-        </Grid>
-      </Grid>
 
     </ContentBox>
   )
