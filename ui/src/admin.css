@@ -85,6 +85,11 @@ body {
   color: white !important;
 }
 
+.bg-green {
+  background-color: #008060 !important;
+  color: white !important;
+}
+
 .bg-gray * {
   background-color: #263b45 !important;
   color: white !important;

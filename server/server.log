@@ -1,148 +1,18 @@
-2024-02-04 17:09:38,638 - app.core.log - INFO - Requested File Path: /opt/odpuser/automation_test_framework/test-framework/config/config.py
-2024-02-04 17:09:38,686 - app.core.log - INFO - Requested File Path: /opt/odpuser/automation_test_framework/test-framework/config/config.py
-2024-02-04 17:17:19,453 - app.core.log - INFO - Robo Server Started at 172.26.3.21:5080
-2024-02-04 17:17:19,458 - app.core.log - INFO - {'endpoint': 'static', 'methods': 'OPTIONS,GET,HEAD', 'url': '/static/<path:filename>'}
-2024-02-04 17:17:19,458 - app.core.log - INFO - {'endpoint': 'auth.login', 'methods': 'OPTIONS,GET,HEAD', 'url': '/api/v1/auth/login'}
-2024-02-04 17:17:19,458 - app.core.log - INFO - {'endpoint': 'admin.get_file_data', 'methods': 'OPTIONS,GET,HEAD', 'url': '/api/v1/agent/execute-test-plan'}
-2024-02-04 17:17:19,458 - app.core.log - INFO - {'endpoint': 'file_manager.get_file_data', 'methods': 'OPTIONS,GET,HEAD', 'url': '/api/v1/file-manager/get-file-data'}
-2024-02-04 17:17:19,458 - app.core.log - INFO - {'endpoint': 'file_manager.set_file_data', 'methods': 'OPTIONS,POST', 'url': '/api/v1/file-manager/set-file-data'}
-2024-02-04 17:17:19,458 - app.core.log - INFO - {'endpoint': 'test_manager.create_suite', 'methods': 'OPTIONS,POST', 'url': '/api/v1/test-manager/suite/create'}
-2024-02-04 17:17:19,458 - app.core.log - INFO - {'endpoint': 'test_manager.list_suite', 'methods': 'OPTIONS,GET,HEAD', 'url': '/api/v1/test-manager/suite/list'}
-2024-02-04 17:17:19,458 - app.core.log - INFO - {'endpoint': 'test_manager.create_testcase', 'methods': 'OPTIONS,POST', 'url': '/api/v1/test-manager/testcase/create'}
-2024-02-04 17:17:19,458 - app.core.log - INFO - {'endpoint': 'test_manager.list_testcase', 'methods': 'OPTIONS,GET,HEAD', 'url': '/api/v1/test-manager/testcase/list'}
-2024-02-04 17:17:19,458 - app.core.log - INFO - {'endpoint': 'test_manager.create_robot_api_list', 'methods': 'OPTIONS,POST,HEAD,GET', 'url': '/api/v1/test-manager/robot-api/list'}
-2024-02-04 17:21:13,178 - app.core.log - INFO - Robo Server Started at 172.26.3.21:5080
-2024-02-04 17:21:13,183 - app.core.log - INFO - {'endpoint': 'static', 'methods': 'HEAD,OPTIONS,GET', 'url': '/static/<path:filename>'}
-2024-02-04 17:21:13,183 - app.core.log - INFO - {'endpoint': 'auth.login', 'methods': 'HEAD,OPTIONS,GET', 'url': '/api/v1/auth/login'}
-2024-02-04 17:21:13,183 - app.core.log - INFO - {'endpoint': 'admin.get_file_data', 'methods': 'HEAD,OPTIONS,GET', 'url': '/api/v1/agent/execute-test-plan'}
-2024-02-04 17:21:13,183 - app.core.log - INFO - {'endpoint': 'file_manager.get_file_data', 'methods': 'HEAD,OPTIONS,GET', 'url': '/api/v1/file-manager/get-file-data'}
-2024-02-04 17:21:13,183 - app.core.log - INFO - {'endpoint': 'file_manager.set_file_data', 'methods': 'OPTIONS,POST', 'url': '/api/v1/file-manager/set-file-data'}
-2024-02-04 17:21:13,183 - app.core.log - INFO - {'endpoint': 'test_manager.create_suite', 'methods': 'OPTIONS,POST', 'url': '/api/v1/test-manager/suite/create'}
-2024-02-04 17:21:13,183 - app.core.log - INFO - {'endpoint': 'test_manager.list_suite', 'methods': 'HEAD,OPTIONS,GET', 'url': '/api/v1/test-manager/suite/list'}
-2024-02-04 17:21:13,183 - app.core.log - INFO - {'endpoint': 'test_manager.create_testcase', 'methods': 'OPTIONS,POST', 'url': '/api/v1/test-manager/testcase/create'}
-2024-02-04 17:21:13,183 - app.core.log - INFO - {'endpoint': 'test_manager.list_testcase', 'methods': 'HEAD,OPTIONS,GET', 'url': '/api/v1/test-manager/testcase/list'}
-2024-02-04 17:21:13,183 - app.core.log - INFO - {'endpoint': 'test_manager.create_robot_api_list', 'methods': 'HEAD,OPTIONS,POST,GET', 'url': '/api/v1/test-manager/robot-api/list'}
-2024-02-04 17:21:53,290 - app.core.log - INFO - Robo Server Started at 172.26.3.21:5080
-2024-02-04 17:21:53,296 - app.core.log - INFO - {'endpoint': 'static', 'methods': 'GET,HEAD,OPTIONS', 'url': '/static/<path:filename>'}
-2024-02-04 17:21:53,296 - app.core.log - INFO - {'endpoint': 'auth.login', 'methods': 'GET,HEAD,OPTIONS', 'url': '/api/v1/auth/login'}
-2024-02-04 17:21:53,296 - app.core.log - INFO - {'endpoint': 'admin.get_file_data', 'methods': 'GET,HEAD,OPTIONS', 'url': '/api/v1/agent/execute-test-plan'}
-2024-02-04 17:21:53,296 - app.core.log - INFO - {'endpoint': 'file_manager.get_file_data', 'methods': 'GET,HEAD,OPTIONS', 'url': '/api/v1/file-manager/get-file-data'}
-2024-02-04 17:21:53,296 - app.core.log - INFO - {'endpoint': 'file_manager.set_file_data', 'methods': 'OPTIONS,POST', 'url': '/api/v1/file-manager/set-file-data'}
-2024-02-04 17:21:53,296 - app.core.log - INFO - {'endpoint': 'test_manager.create_suite', 'methods': 'OPTIONS,POST', 'url': '/api/v1/test-manager/suite/create'}
-2024-02-04 17:21:53,296 - app.core.log - INFO - {'endpoint': 'test_manager.list_suite', 'methods': 'GET,HEAD,OPTIONS', 'url': '/api/v1/test-manager/suite/list'}
-2024-02-04 17:21:53,296 - app.core.log - INFO - {'endpoint': 'test_manager.create_testcase', 'methods': 'OPTIONS,POST', 'url': '/api/v1/test-manager/testcase/create'}
-2024-02-04 17:21:53,296 - app.core.log - INFO - {'endpoint': 'test_manager.list_testcase', 'methods': 'GET,HEAD,OPTIONS', 'url': '/api/v1/test-manager/testcase/list'}
-2024-02-04 17:21:53,296 - app.core.log - INFO - {'endpoint': 'test_manager.create_robot_api_list', 'methods': 'GET,HEAD,OPTIONS,POST', 'url': '/api/v1/test-manager/robot-api/list'}
-2024-02-04 17:25:32,090 - app.core.log - INFO - Robo Server Started at 172.26.3.21:5080
-2024-02-04 17:25:32,096 - app.core.log - INFO - {'endpoint': 'static', 'methods': 'HEAD,GET,OPTIONS', 'url': '/static/<path:filename>'}
-2024-02-04 17:25:32,096 - app.core.log - INFO - {'endpoint': 'auth.login', 'methods': 'HEAD,GET,OPTIONS', 'url': '/api/v1/auth/login'}
-2024-02-04 17:25:32,097 - app.core.log - INFO - {'endpoint': 'admin.get_file_data', 'methods': 'HEAD,GET,OPTIONS', 'url': '/api/v1/agent/execute-test-plan'}
-2024-02-04 17:25:32,097 - app.core.log - INFO - {'endpoint': 'file_manager.get_file_data', 'methods': 'HEAD,GET,OPTIONS', 'url': '/api/v1/file-manager/get-file-data'}
-2024-02-04 17:25:32,097 - app.core.log - INFO - {'endpoint': 'file_manager.set_file_data', 'methods': 'POST,OPTIONS', 'url': '/api/v1/file-manager/set-file-data'}
-2024-02-04 17:25:32,097 - app.core.log - INFO - {'endpoint': 'test_manager.create_suite', 'methods': 'POST,OPTIONS', 'url': '/api/v1/test-manager/suite/create'}
-2024-02-04 17:25:32,097 - app.core.log - INFO - {'endpoint': 'test_manager.list_suite', 'methods': 'HEAD,GET,OPTIONS', 'url': '/api/v1/test-manager/suite/list'}
-2024-02-04 17:25:32,097 - app.core.log - INFO - {'endpoint': 'test_manager.create_testcase', 'methods': 'POST,OPTIONS', 'url': '/api/v1/test-manager/testcase/create'}
-2024-02-04 17:25:32,097 - app.core.log - INFO - {'endpoint': 'test_manager.list_testcase', 'methods': 'HEAD,GET,OPTIONS', 'url': '/api/v1/test-manager/testcase/list'}
-2024-02-04 17:25:32,097 - app.core.log - INFO - {'endpoint': 'test_manager.create_robot_api_list', 'methods': 'HEAD,POST,GET,OPTIONS', 'url': '/api/v1/test-manager/robot-api/list'}
-2024-02-04 17:25:40,141 - app.core.log - INFO - Robo Server Started at 172.26.3.21:5080
-2024-02-04 17:25:40,146 - app.core.log - INFO - {'endpoint': 'static', 'methods': 'HEAD,OPTIONS,GET', 'url': '/static/<path:filename>'}
-2024-02-04 17:25:40,146 - app.core.log - INFO - {'endpoint': 'auth.login', 'methods': 'HEAD,OPTIONS,GET', 'url': '/api/v1/auth/login'}
-2024-02-04 17:25:40,146 - app.core.log - INFO - {'endpoint': 'admin.get_file_data', 'methods': 'HEAD,OPTIONS,GET', 'url': '/api/v1/agent/execute-test-plan'}
-2024-02-04 17:25:40,146 - app.core.log - INFO - {'endpoint': 'file_manager.get_file_data', 'methods': 'HEAD,OPTIONS,GET', 'url': '/api/v1/file-manager/get-file-data'}
-2024-02-04 17:25:40,147 - app.core.log - INFO - {'endpoint': 'file_manager.set_file_data', 'methods': 'OPTIONS,POST', 'url': '/api/v1/file-manager/set-file-data'}
-2024-02-04 17:25:40,147 - app.core.log - INFO - {'endpoint': 'test_manager.create_suite', 'methods': 'OPTIONS,POST', 'url': '/api/v1/test-manager/suite/create'}
-2024-02-04 17:25:40,147 - app.core.log - INFO - {'endpoint': 'test_manager.list_suite', 'methods': 'HEAD,OPTIONS,GET', 'url': '/api/v1/test-manager/suite/list'}
-2024-02-04 17:25:40,147 - app.core.log - INFO - {'endpoint': 'test_manager.create_testcase', 'methods': 'OPTIONS,POST', 'url': '/api/v1/test-manager/testcase/create'}
-2024-02-04 17:25:40,147 - app.core.log - INFO - {'endpoint': 'test_manager.list_testcase', 'methods': 'HEAD,OPTIONS,GET', 'url': '/api/v1/test-manager/testcase/list'}
-2024-02-04 17:25:40,147 - app.core.log - INFO - {'endpoint': 'test_manager.create_robot_api_list', 'methods': 'HEAD,OPTIONS,POST,GET', 'url': '/api/v1/test-manager/robot-api/list'}
-2024-02-04 17:27:28,787 - app.core.log - INFO - Robo Server Started at 172.26.3.21:5080
-2024-02-04 17:27:28,792 - app.core.log - INFO - {'endpoint': 'static', 'methods': 'GET,OPTIONS,HEAD', 'url': '/static/<path:filename>'}
-2024-02-04 17:27:28,792 - app.core.log - INFO - {'endpoint': 'auth.login', 'methods': 'GET,OPTIONS,HEAD', 'url': '/api/v1/auth/login'}
-2024-02-04 17:27:28,792 - app.core.log - INFO - {'endpoint': 'admin.get_file_data', 'methods': 'GET,OPTIONS,HEAD', 'url': '/api/v1/agent/execute-test-plan'}
-2024-02-04 17:27:28,792 - app.core.log - INFO - {'endpoint': 'file_manager.get_file_data', 'methods': 'GET,OPTIONS,HEAD', 'url': '/api/v1/file-manager/get-file-data'}
-2024-02-04 17:27:28,792 - app.core.log - INFO - {'endpoint': 'file_manager.set_file_data', 'methods': 'OPTIONS,POST', 'url': '/api/v1/file-manager/set-file-data'}
-2024-02-04 17:27:28,792 - app.core.log - INFO - {'endpoint': 'test_manager.create_suite', 'methods': 'OPTIONS,POST', 'url': '/api/v1/test-manager/suite/create'}
-2024-02-04 17:27:28,792 - app.core.log - INFO - {'endpoint': 'test_manager.list_suite', 'methods': 'GET,OPTIONS,HEAD', 'url': '/api/v1/test-manager/suite/list'}
-2024-02-04 17:27:28,792 - app.core.log - INFO - {'endpoint': 'test_manager.create_testcase', 'methods': 'OPTIONS,POST', 'url': '/api/v1/test-manager/testcase/create'}
-2024-02-04 17:27:28,792 - app.core.log - INFO - {'endpoint': 'test_manager.list_testcase', 'methods': 'GET,OPTIONS,HEAD', 'url': '/api/v1/test-manager/testcase/list'}
-2024-02-04 17:27:28,792 - app.core.log - INFO - {'endpoint': 'test_manager.create_robot_api_list', 'methods': 'GET,OPTIONS,HEAD,POST', 'url': '/api/v1/test-manager/robot-api/list'}
-2024-02-04 17:30:16,025 - app.core.log - INFO - Robo Server Started at 172.26.3.21:5080
-2024-02-04 17:30:16,032 - app.core.log - INFO - {'endpoint': 'static', 'methods': 'GET,OPTIONS,HEAD', 'url': '/static/<path:filename>'}
-2024-02-04 17:30:16,032 - app.core.log - INFO - {'endpoint': 'auth.login', 'methods': 'GET,OPTIONS,HEAD', 'url': '/api/v1/auth/login'}
-2024-02-04 17:30:16,032 - app.core.log - INFO - {'endpoint': 'admin.get_file_data', 'methods': 'GET,OPTIONS,HEAD', 'url': '/api/v1/agent/execute-test-plan'}
-2024-02-04 17:30:16,032 - app.core.log - INFO - {'endpoint': 'file_manager.get_file_data', 'methods': 'GET,OPTIONS,HEAD', 'url': '/api/v1/file-manager/get-file-data'}
-2024-02-04 17:30:16,032 - app.core.log - INFO - {'endpoint': 'file_manager.set_file_data', 'methods': 'POST,OPTIONS', 'url': '/api/v1/file-manager/set-file-data'}
-2024-02-04 17:30:16,032 - app.core.log - INFO - {'endpoint': 'test_manager.create_suite', 'methods': 'POST,OPTIONS', 'url': '/api/v1/test-manager/suite/create'}
-2024-02-04 17:30:16,032 - app.core.log - INFO - {'endpoint': 'test_manager.list_suite', 'methods': 'GET,OPTIONS,HEAD', 'url': '/api/v1/test-manager/suite/list'}
-2024-02-04 17:30:16,033 - app.core.log - INFO - {'endpoint': 'test_manager.create_testcase', 'methods': 'POST,OPTIONS', 'url': '/api/v1/test-manager/testcase/create'}
-2024-02-04 17:30:16,033 - app.core.log - INFO - {'endpoint': 'test_manager.list_testcase', 'methods': 'GET,OPTIONS,HEAD', 'url': '/api/v1/test-manager/testcase/list'}
-2024-02-04 17:30:16,033 - app.core.log - INFO - {'endpoint': 'test_manager.create_robot_api_list', 'methods': 'POST,GET,OPTIONS,HEAD', 'url': '/api/v1/test-manager/robot-api/list'}
-2024-02-04 17:32:39,246 - app.core.log - INFO - Robo Server Started at 172.26.3.21:5080
-2024-02-04 17:32:39,252 - app.core.log - INFO - {'endpoint': 'static', 'methods': 'GET,OPTIONS,HEAD', 'url': '/static/<path:filename>'}
-2024-02-04 17:32:39,252 - app.core.log - INFO - {'endpoint': 'auth.login', 'methods': 'GET,OPTIONS,HEAD', 'url': '/api/v1/auth/login'}
-2024-02-04 17:32:39,252 - app.core.log - INFO - {'endpoint': 'admin.get_file_data', 'methods': 'GET,OPTIONS,HEAD', 'url': '/api/v1/agent/execute-test-plan'}
-2024-02-04 17:32:39,252 - app.core.log - INFO - {'endpoint': 'file_manager.get_file_data', 'methods': 'GET,OPTIONS,HEAD', 'url': '/api/v1/file-manager/get-file-data'}
-2024-02-04 17:32:39,252 - app.core.log - INFO - {'endpoint': 'file_manager.set_file_data', 'methods': 'OPTIONS,POST', 'url': '/api/v1/file-manager/set-file-data'}
-2024-02-04 17:32:39,252 - app.core.log - INFO - {'endpoint': 'test_manager.create_suite', 'methods': 'OPTIONS,POST', 'url': '/api/v1/test-manager/suite/create'}
-2024-02-04 17:32:39,252 - app.core.log - INFO - {'endpoint': 'test_manager.list_suite', 'methods': 'GET,OPTIONS,HEAD', 'url': '/api/v1/test-manager/suite/list'}
-2024-02-04 17:32:39,252 - app.core.log - INFO - {'endpoint': 'test_manager.create_testcase', 'methods': 'OPTIONS,POST', 'url': '/api/v1/test-manager/testcase/create'}
-2024-02-04 17:32:39,252 - app.core.log - INFO - {'endpoint': 'test_manager.list_testcase', 'methods': 'GET,OPTIONS,HEAD', 'url': '/api/v1/test-manager/testcase/list'}
-2024-02-04 17:32:39,252 - app.core.log - INFO - {'endpoint': 'test_manager.create_robot_api_list', 'methods': 'GET,OPTIONS,POST,HEAD', 'url': '/api/v1/test-manager/robot-api/list'}
-2024-02-04 17:33:45,841 - app.core.log - INFO - Robo Server Started at 172.26.3.21:5080
-2024-02-04 17:33:45,845 - app.core.log - INFO - {'endpoint': 'static', 'methods': 'GET,HEAD,OPTIONS', 'url': '/static/<path:filename>'}
-2024-02-04 17:33:45,846 - app.core.log - INFO - {'endpoint': 'auth.login', 'methods': 'GET,HEAD,OPTIONS', 'url': '/api/v1/auth/login'}
-2024-02-04 17:33:45,846 - app.core.log - INFO - {'endpoint': 'admin.get_file_data', 'methods': 'GET,HEAD,OPTIONS', 'url': '/api/v1/agent/execute-test-plan'}
-2024-02-04 17:33:45,846 - app.core.log - INFO - {'endpoint': 'file_manager.get_file_data', 'methods': 'GET,HEAD,OPTIONS', 'url': '/api/v1/file-manager/get-file-data'}
-2024-02-04 17:33:45,846 - app.core.log - INFO - {'endpoint': 'file_manager.set_file_data', 'methods': 'POST,OPTIONS', 'url': '/api/v1/file-manager/set-file-data'}
-2024-02-04 17:33:45,846 - app.core.log - INFO - {'endpoint': 'test_manager.create_suite', 'methods': 'POST,OPTIONS', 'url': '/api/v1/test-manager/suite/create'}
-2024-02-04 17:33:45,846 - app.core.log - INFO - {'endpoint': 'test_manager.list_suite', 'methods': 'GET,HEAD,OPTIONS', 'url': '/api/v1/test-manager/suite/list'}
-2024-02-04 17:33:45,846 - app.core.log - INFO - {'endpoint': 'test_manager.create_testcase', 'methods': 'POST,OPTIONS', 'url': '/api/v1/test-manager/testcase/create'}
-2024-02-04 17:33:45,846 - app.core.log - INFO - {'endpoint': 'test_manager.list_testcase', 'methods': 'GET,HEAD,OPTIONS', 'url': '/api/v1/test-manager/testcase/list'}
-2024-02-04 17:33:45,846 - app.core.log - INFO - {'endpoint': 'test_manager.create_robot_api_list', 'methods': 'GET,POST,HEAD,OPTIONS', 'url': '/api/v1/test-manager/robot-api/list'}
-2024-02-04 17:35:09,547 - app.core.log - INFO - Robo Server Started at 172.26.3.21:5080
-2024-02-04 17:35:09,553 - app.core.log - INFO - {'endpoint': 'static', 'methods': 'GET,HEAD,OPTIONS', 'url': '/static/<path:filename>'}
-2024-02-04 17:35:09,553 - app.core.log - INFO - {'endpoint': 'auth.login', 'methods': 'GET,HEAD,OPTIONS', 'url': '/api/v1/auth/login'}
-2024-02-04 17:35:09,553 - app.core.log - INFO - {'endpoint': 'admin.get_file_data', 'methods': 'GET,HEAD,OPTIONS', 'url': '/api/v1/agent/execute-test-plan'}
-2024-02-04 17:35:09,553 - app.core.log - INFO - {'endpoint': 'file_manager.get_file_data', 'methods': 'GET,HEAD,OPTIONS', 'url': '/api/v1/file-manager/get-file-data'}
-2024-02-04 17:35:09,553 - app.core.log - INFO - {'endpoint': 'file_manager.set_file_data', 'methods': 'OPTIONS,POST', 'url': '/api/v1/file-manager/set-file-data'}
-2024-02-04 17:35:09,553 - app.core.log - INFO - {'endpoint': 'test_manager.create_suite', 'methods': 'OPTIONS,POST', 'url': '/api/v1/test-manager/suite/create'}
-2024-02-04 17:35:09,554 - app.core.log - INFO - {'endpoint': 'test_manager.list_suite', 'methods': 'GET,HEAD,OPTIONS', 'url': '/api/v1/test-manager/suite/list'}
-2024-02-04 17:35:09,554 - app.core.log - INFO - {'endpoint': 'test_manager.create_testcase', 'methods': 'OPTIONS,POST', 'url': '/api/v1/test-manager/testcase/create'}
-2024-02-04 17:35:09,554 - app.core.log - INFO - {'endpoint': 'test_manager.list_testcase', 'methods': 'GET,HEAD,OPTIONS', 'url': '/api/v1/test-manager/testcase/list'}
-2024-02-04 17:35:09,554 - app.core.log - INFO - {'endpoint': 'test_manager.create_robot_api_list', 'methods': 'GET,POST,HEAD,OPTIONS', 'url': '/api/v1/test-manager/robot-api/list'}
-2024-02-04 17:35:46,633 - app.core.log - INFO - Robo Server Started at 172.26.3.21:5080
-2024-02-04 17:35:46,639 - app.core.log - INFO - {'endpoint': 'static', 'methods': 'HEAD,GET,OPTIONS', 'url': '/static/<path:filename>'}
-2024-02-04 17:35:46,639 - app.core.log - INFO - {'endpoint': 'auth.login', 'methods': 'HEAD,GET,OPTIONS', 'url': '/api/v1/auth/login'}
-2024-02-04 17:35:46,639 - app.core.log - INFO - {'endpoint': 'admin.get_file_data', 'methods': 'HEAD,GET,OPTIONS', 'url': '/api/v1/agent/execute-test-plan'}
-2024-02-04 17:35:46,639 - app.core.log - INFO - {'endpoint': 'file_manager.get_file_data', 'methods': 'HEAD,GET,OPTIONS', 'url': '/api/v1/file-manager/get-file-data'}
-2024-02-04 17:35:46,639 - app.core.log - INFO - {'endpoint': 'file_manager.set_file_data', 'methods': 'POST,OPTIONS', 'url': '/api/v1/file-manager/set-file-data'}
-2024-02-04 17:35:46,639 - app.core.log - INFO - {'endpoint': 'test_manager.create_suite', 'methods': 'POST,OPTIONS', 'url': '/api/v1/test-manager/suite/create'}
-2024-02-04 17:35:46,639 - app.core.log - INFO - {'endpoint': 'test_manager.list_suite', 'methods': 'HEAD,GET,OPTIONS', 'url': '/api/v1/test-manager/suite/list'}
-2024-02-04 17:35:46,639 - app.core.log - INFO - {'endpoint': 'test_manager.create_testcase', 'methods': 'POST,OPTIONS', 'url': '/api/v1/test-manager/testcase/create'}
-2024-02-04 17:35:46,639 - app.core.log - INFO - {'endpoint': 'test_manager.list_testcase', 'methods': 'HEAD,GET,OPTIONS', 'url': '/api/v1/test-manager/testcase/list'}
-2024-02-04 17:35:46,639 - app.core.log - INFO - {'endpoint': 'test_manager.create_robot_api_list', 'methods': 'POST,HEAD,GET,OPTIONS', 'url': '/api/v1/test-manager/robot-api/list'}
-2024-02-04 17:35:48,625 - app.core.log - INFO - Robo Server Started at 172.26.3.21:5080
-2024-02-04 17:35:48,630 - app.core.log - INFO - {'endpoint': 'static', 'methods': 'HEAD,OPTIONS,GET', 'url': '/static/<path:filename>'}
-2024-02-04 17:35:48,630 - app.core.log - INFO - {'endpoint': 'auth.login', 'methods': 'HEAD,OPTIONS,GET', 'url': '/api/v1/auth/login'}
-2024-02-04 17:35:48,630 - app.core.log - INFO - {'endpoint': 'admin.get_file_data', 'methods': 'HEAD,OPTIONS,GET', 'url': '/api/v1/agent/execute-test-plan'}
-2024-02-04 17:35:48,630 - app.core.log - INFO - {'endpoint': 'file_manager.get_file_data', 'methods': 'HEAD,OPTIONS,GET', 'url': '/api/v1/file-manager/get-file-data'}
-2024-02-04 17:35:48,631 - app.core.log - INFO - {'endpoint': 'file_manager.set_file_data', 'methods': 'POST,OPTIONS', 'url': '/api/v1/file-manager/set-file-data'}
-2024-02-04 17:35:48,631 - app.core.log - INFO - {'endpoint': 'test_manager.create_suite', 'methods': 'POST,OPTIONS', 'url': '/api/v1/test-manager/suite/create'}
-2024-02-04 17:35:48,631 - app.core.log - INFO - {'endpoint': 'test_manager.list_suite', 'methods': 'HEAD,OPTIONS,GET', 'url': '/api/v1/test-manager/suite/list'}
-2024-02-04 17:35:48,631 - app.core.log - INFO - {'endpoint': 'test_manager.create_testcase', 'methods': 'POST,OPTIONS', 'url': '/api/v1/test-manager/testcase/create'}
-2024-02-04 17:35:48,631 - app.core.log - INFO - {'endpoint': 'test_manager.list_testcase', 'methods': 'HEAD,OPTIONS,GET', 'url': '/api/v1/test-manager/testcase/list'}
-2024-02-04 17:35:48,631 - app.core.log - INFO - {'endpoint': 'test_manager.create_robot_api_list', 'methods': 'POST,OPTIONS,GET,HEAD', 'url': '/api/v1/test-manager/robot-api/list'}
-2024-02-04 17:36:17,674 - app.core.log - INFO - Robo Server Started at 172.26.3.21:5080
-2024-02-04 17:36:17,680 - app.core.log - INFO - {'endpoint': 'static', 'methods': 'GET,OPTIONS,HEAD', 'url': '/static/<path:filename>'}
-2024-02-04 17:36:17,680 - app.core.log - INFO - {'endpoint': 'auth.login', 'methods': 'GET,OPTIONS,HEAD', 'url': '/api/v1/auth/login'}
-2024-02-04 17:36:17,680 - app.core.log - INFO - {'endpoint': 'admin.get_file_data', 'methods': 'GET,OPTIONS,HEAD', 'url': '/api/v1/agent/execute-test-plan'}
-2024-02-04 17:36:17,680 - app.core.log - INFO - {'endpoint': 'file_manager.get_file_data', 'methods': 'GET,OPTIONS,HEAD', 'url': '/api/v1/file-manager/get-file-data'}
-2024-02-04 17:36:17,680 - app.core.log - INFO - {'endpoint': 'file_manager.set_file_data', 'methods': 'OPTIONS,POST', 'url': '/api/v1/file-manager/set-file-data'}
-2024-02-04 17:36:17,680 - app.core.log - INFO - {'endpoint': 'test_manager.create_suite', 'methods': 'OPTIONS,POST', 'url': '/api/v1/test-manager/suite/create'}
-2024-02-04 17:36:17,680 - app.core.log - INFO - {'endpoint': 'test_manager.list_suite', 'methods': 'GET,OPTIONS,HEAD', 'url': '/api/v1/test-manager/suite/list'}
-2024-02-04 17:36:17,680 - app.core.log - INFO - {'endpoint': 'test_manager.create_testcase', 'methods': 'OPTIONS,POST', 'url': '/api/v1/test-manager/testcase/create'}
-2024-02-04 17:36:17,680 - app.core.log - INFO - {'endpoint': 'test_manager.list_testcase', 'methods': 'GET,OPTIONS,HEAD', 'url': '/api/v1/test-manager/testcase/list'}
-2024-02-04 17:36:17,680 - app.core.log - INFO - {'endpoint': 'test_manager.create_robot_api_list', 'methods': 'GET,OPTIONS,POST,HEAD', 'url': '/api/v1/test-manager/robot-api/list'}
-2024-02-04 17:37:18,283 - app.core.log - INFO - Robo Server Started at 172.26.3.21:5080
-2024-02-04 18:08:07,503 - app.core.log - INFO - Requested File Path: /opt/odpuser/automation_test_framework/test-framework/config/config.py
-2024-02-04 18:08:07,547 - app.core.log - INFO - Requested File Path: /opt/odpuser/automation_test_framework/test-framework/config/config.py
+2024-02-25 14:52:38,974 - app.core.log - INFO - Robo Server Started at 172.26.3.21:5080
+2024-02-25 14:52:39,547 - app.core.log - INFO - Robo Server Started at 172.26.3.21:5080
+2024-02-25 14:53:39,094 - app.core.log - INFO - Requested File Path: /opt/odpuser/automation_test_framework/test-framework/config/config.py
+2024-02-25 14:53:39,096 - app.core.log - INFO - Requested File Path: /opt/odpuser/automation_test_framework/test-framework/config/config.py
+2024-02-25 15:30:03,415 - app.core.log - INFO - Requested File Path: /opt/odpuser/automation_test_framework/test-framework/config/config.py
+2024-02-25 15:30:03,617 - app.core.log - INFO - Requested File Path: /opt/odpuser/automation_test_framework/test-framework/config/config.py
+2024-02-25 15:34:07,381 - app.core.log - INFO - Requested File Path: /opt/odpuser/automation_test_framework/test-framework/config/config.py
+2024-02-25 15:34:07,523 - app.core.log - INFO - Requested File Path: /opt/odpuser/automation_test_framework/test-framework/config/config.py
+2024-03-06 22:07:41,146 - app.core.log - INFO - Robo Server Started at 172.26.3.21:5080
+2024-03-06 22:07:42,390 - app.core.log - INFO - Robo Server Started at 172.26.3.21:5080
+2024-03-06 22:14:23,315 - app.core.log - INFO - Requested File Path: /opt/odpuser/automation_test_framework/test-framework/config/config.py
+2024-03-06 22:14:23,317 - app.core.log - INFO - Requested File Path: /opt/odpuser/automation_test_framework/test-framework/config/config.py
+2024-03-06 23:49:17,897 - app.core.log - INFO - Requested File Path: /opt/odpuser/automation_test_framework/test-framework/config/config.py
+2024-03-06 23:49:18,058 - app.core.log - INFO - Requested File Path: /opt/odpuser/automation_test_framework/test-framework/config/config.py
+2024-03-07 00:00:58,005 - app.core.log - INFO - Requested File Path: /opt/odpuser/automation_test_framework/test-framework/config/jm_config.py
+2024-03-07 00:00:58,982 - app.core.log - INFO - Requested File Path: /opt/odpuser/automation_test_framework/test-framework/config/config.py
+2024-03-07 00:22:36,516 - app.core.log - INFO - Requested File Path: /opt/odpuser/automation_test_framework/test-framework/config/config.py
+2024-03-07 00:22:36,519 - app.core.log - INFO - Requested File Path: /opt/odpuser/automation_test_framework/test-framework/config/config.py

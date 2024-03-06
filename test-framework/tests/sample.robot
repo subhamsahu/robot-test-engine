@@ -5,12 +5,12 @@ Suite Teardown   TEST_SUITE_TEARDOWN
 Test Setup       TEST_SETUP
 Test Teardown    TEST_TEARDOWN
 Resource         ${CURDIR}/../src/resources.robot
+Resource         ${CURDIR}/objects/objects.robot
+Resource         ${CURDIR}/keywords/keywords.robot
+Resource         ${CURDIR}/variables/variables.robot
 
 
 Test Tags    POC
-
-*** Variables ***
-${OK}=   ${200}
 
 *** Test Cases ***
 

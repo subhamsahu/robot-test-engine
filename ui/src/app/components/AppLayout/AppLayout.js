@@ -6,24 +6,36 @@ import { fetchTestcaseList } from '../../services/testcase'
 import { fetchTestsuiteList } from '../../services/testsuite'
 import { setTestcaseList } from '../../redux/actions/testcaseAction'
 import { setTestsuiteList } from '../../redux/actions/testsuiteAction'
+import { fetchTestPlanList } from '../../services/testplan'
+import { setTestplanList } from '../../redux/actions/testplanAction'
 
 
 const AppLayout = ({ children }) => {
   const dispatch = useDispatch()
   const initializeSuiteData = async () => {
     console.warn("Fetching Test Suite List")
-    let testsuitedate = await fetchTestsuiteList()
-    console.warn(testsuitedate)
-    if (testsuitedate?.data && testsuitedate?.success === true) {
-      dispatch(setTestsuiteList(testsuitedate.data))
+    let testsuitedata = await fetchTestsuiteList()
+    console.warn(testsuitedata)
+    if (testsuitedata?.data && testsuitedata?.success === true) {
+      dispatch(setTestsuiteList(testsuitedata.data))
     }
   }
   const initializeTestcaseData = async () => {
     console.warn("Fetching Test Case List...")
-    let testcasedate = await fetchTestcaseList()
-    console.warn(testcasedate)
-    if (testcasedate?.data && testcasedate?.success === true) {
-      dispatch(setTestcaseList(testcasedate.data))
+    let testcasedata = await fetchTestcaseList()
+    console.warn(testcasedata)
+    if (testcasedata?.data && testcasedata?.success === true) {
+      dispatch(setTestcaseList(testcasedata.data))
+    }
+
+  }
+
+  const initializeTestplanData = async () => {
+    console.warn("Fetching Test plan List...")
+    let testplandata = await fetchTestPlanList()
+    console.warn(testplandata)
+    if (testplandata?.data && testplandata?.success === true) {
+      dispatch(setTestplanList(testplandata.data))
     }
 
   }
@@ -32,6 +44,7 @@ const AppLayout = ({ children }) => {
       console.warn("Fetching App Data")
       await initializeTestcaseData()
       await initializeSuiteData()
+      await initializeTestplanData()
     }
     initializeApp()
   }, [])

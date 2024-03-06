@@ -27,15 +27,21 @@ export const sideBarItems = [
         route: '/testframework',
         children: [
             { label: "Config", route: "/testframework/config", icon: <SettingsInputComponentIcon />, },
-            { label: "Data", route: "/testframework/data", icon: <StorageIcon /> },
+            // { label: "Data", route: "/testframework/data", icon: <StorageIcon /> },
             { label: "Tests", route: "/testframework/tests", icon: <PrecisionManufacturingIcon /> },
             { label: "Test Suite", route: "/testframework/suite", icon: <FileOpenIcon /> },
             { label: "Testplan", route: "/testframework/testplan", icon: <ListAltSharpIcon /> },
-            { label: "Logs", route: "/testframework/logs", icon: <AssessmentIcon />  },
+            // { label: "Execution", route: "/testframework/logs", icon: <AssessmentIcon />  },
         ],
     },
     {
         id: 3,
+        icon: <AssessmentIcon />,
+        label: 'Logs',
+        route: '/testframework/logs',
+    },
+    {
+        id: 4,
         icon: <PestControlIcon />,
         label: 'Defect Management',
         route: '/defectmanagement',
@@ -46,7 +52,7 @@ export const sideBarLowerItems = [
         id: 98,
         icon: <TuneIcon />,
         label: 'Settings',
-        route: 'settings',
+        route: '/settings',
     },
     {
         id: 99,
