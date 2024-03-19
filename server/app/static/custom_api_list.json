@@ -1,0 +1,162 @@
+[
+  {
+    "keyword": "Make DELETE Request",
+    "args": [
+      {
+        "name": "url",
+        "type": null,
+        "types": [],
+        "typedocs": {},
+        "defaultValue": null,
+        "kind": "POSITIONAL_OR_NAMED",
+        "required": true,
+        "repr": "url"
+      },
+      {
+        "name": "params",
+        "type": null,
+        "types": [],
+        "typedocs": {},
+        "defaultValue": "optional",
+        "kind": "POSITIONAL_OR_NAMED",
+        "required": false,
+        "repr": "params=optional"
+      },
+      {
+        "name": "other_parameters",
+        "type": null,
+        "types": [],
+        "typedocs": {},
+        "defaultValue": null,
+        "kind": "VAR_POSITIONAL",
+        "required": false,
+        "repr": "*other_parameters"
+      }
+    ]
+  },
+  {
+    "keyword": "Make GET Request",
+    "args": [
+      {
+        "name": "url",
+        "type": null,
+        "types": [],
+        "typedocs": {},
+        "defaultValue": null,
+        "kind": "POSITIONAL_OR_NAMED",
+        "required": true,
+        "repr": "url"
+      },
+      {
+        "name": "params",
+        "type": null,
+        "types": [],
+        "typedocs": {},
+        "defaultValue": "optional",
+        "kind": "POSITIONAL_OR_NAMED",
+        "required": false,
+        "repr": "params=optional"
+      },
+      {
+        "name": "other_parameters",
+        "type": null,
+        "types": [],
+        "typedocs": {},
+        "defaultValue": null,
+        "kind": "VAR_POSITIONAL",
+        "required": false,
+        "repr": "*other_parameters"
+      }
+    ]
+  },
+  {
+    "keyword": "Make POST Request",
+    "args": [
+      {
+        "name": "url",
+        "type": null,
+        "types": [],
+        "typedocs": {},
+        "defaultValue": null,
+        "kind": "POSITIONAL_OR_NAMED",
+        "required": true,
+        "repr": "url"
+      },
+      {
+        "name": "file",
+        "type": null,
+        "types": [],
+        "typedocs": {},
+        "defaultValue": "optional",
+        "kind": "POSITIONAL_OR_NAMED",
+        "required": false,
+        "repr": "file=optional"
+      },
+      {
+        "name": "delete",
+        "type": null,
+        "types": [],
+        "typedocs": {},
+        "defaultValue": "optional",
+        "kind": "POSITIONAL_OR_NAMED",
+        "required": false,
+        "repr": "delete=optional"
+      },
+      {
+        "name": "other_parameters",
+        "type": null,
+        "types": [],
+        "typedocs": {},
+        "defaultValue": null,
+        "kind": "VAR_POSITIONAL",
+        "required": false,
+        "repr": "*other_parameters"
+      }
+    ]
+  },
+  {
+    "keyword": "Make PUT Request",
+    "args": [
+      {
+        "name": "url",
+        "type": null,
+        "types": [],
+        "typedocs": {},
+        "defaultValue": null,
+        "kind": "POSITIONAL_OR_NAMED",
+        "required": true,
+        "repr": "url"
+      },
+      {
+        "name": "file",
+        "type": null,
+        "types": [],
+        "typedocs": {},
+        "defaultValue": "optional",
+        "kind": "POSITIONAL_OR_NAMED",
+        "required": false,
+        "repr": "file=optional"
+      },
+      {
+        "name": "delete",
+        "type": null,
+        "types": [],
+        "typedocs": {},
+        "defaultValue": "optional",
+        "kind": "POSITIONAL_OR_NAMED",
+        "required": false,
+        "repr": "delete=optional"
+      },
+      {
+        "name": "other_parameters",
+        "type": null,
+        "types": [],
+        "typedocs": {},
+        "defaultValue": null,
+        "kind": "VAR_POSITIONAL",
+        "required": false,
+        "repr": "*other_parameters"
+      }
+    ]
+  }
+]

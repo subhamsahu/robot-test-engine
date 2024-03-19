@@ -18,5 +18,15 @@ TC-01
     [Documentation]  Sample Testcase to create and delete a device manager on Domain Proxy
     [Tags]  TEST
 
-    ${resp}=   Custom Keyword  arg1=arg1
+    ${resp}=   Make POST Request  url=http://172.26.3.21:5080/api/v1/dummy/products   file=product.json
+    Should Be Equal    ${resp.status_code}    ${STATUS_CREATED}
 
+    ${resp}=   Make GET Request  url=http://172.26.3.21:5080/api/v1/dummy/products
+    Should Be Equal    ${resp.status_code}    ${STATUS_OK}
+    Log To Console     ${resp.text}
+
+    ${resp}=   Make PUT Request  url=http://172.26.3.21:5080/api/v1/dummy/products/1   file=product.json
+    Should Be Equal    ${resp.status_code}    ${STATUS_OK}
+
+    ${resp}=   Make DELETE Request  url=http://172.26.3.21:5080/api/v1/dummy/products/1
+    Should Be Equal    ${resp.status_code}    ${STATUS_OK}

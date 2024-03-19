@@ -65,6 +65,7 @@ const Tests = () => {
   useEffect(() => {
     fetchRobotAPIList()
     fetchTestcaseList()
+    fetchCustomAPIList()
   }, [])
 
 
@@ -75,6 +76,18 @@ const Tests = () => {
 
     if (data && data?.success === true) {
       setrobotAPIList(data?.data)
+    } else {
+      dispatch(showSnackBar({ msg: `Fetch Robot API List Fail ${data.exception_reason}`, type: "error" }))
+    }
+  }
+
+  const fetchCustomAPIList = async () => {
+    const url = BACKEND_URL + '/test-manager/custom-api/list'
+    let params = {}
+    const data = await get(url, params)
+
+    if (data && data?.success === true) {
+      setcustomAPIList(data?.data)
     } else {
       dispatch(showSnackBar({ msg: `Fetch Robot API List Fail ${data.exception_reason}`, type: "error" }))
     }

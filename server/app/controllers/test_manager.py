@@ -15,6 +15,7 @@ suite_coll = db['suites']
 testcases_coll = db['testcases']
 testplan_coll = db['testplans']
 robot_api_coll = db['robot_api']
+custom_api_coll = db['custom_api']
 
 class TestManagerService:
     """
@@ -211,6 +212,34 @@ class TestManagerService:
             list: The robot API list.
         """
         file_path = SERVER_PATH + '/static/robot_api_list.json'
+        if not os.path.exists(file_path):
+            raise Exception("robot api list file not exist")
+        api_list = []
+        with open(file_path, 'r') as fin:
+            api_list = json.load(fin)
+        return api_list
+    
+    def create_custom_api_list(self) -> None:
+        """
+        Create the custom API list.
+        """
+        file_path = SERVER_PATH + '/static/custom_api_list.json'
+        if not os.path.exists(file_path):
+            raise Exception("robot api list file not exist")
+        api_list = []
+        with open(file_path, 'r') as fin:
+            api_list = json.load(fin)
+        for item in api_list:
+            custom_api_coll.insert_one(item)
+
+    def fetch_custom_api_list(self) -> list:
+        """
+        Fetch the robot API list.
+
+        Returns:
+            list: The robot API list.
+        """
+        file_path = SERVER_PATH + '/static/custom_api_list.json'
         if not os.path.exists(file_path):
             raise Exception("robot api list file not exist")
         api_list = []

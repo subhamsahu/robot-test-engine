@@ -129,13 +129,27 @@ def list_testplan():
         return error_response(500,str(e)), 500
 
 @test_manager.route('/robot-api/list', methods=['POST','GET'])
-def create_robot_api_list():
+def robot_api_handler():
     try:
         if request.method == 'POST':
             data= test_manager_controller_obj.create_robot_api_list()
             return success_response(status=201, data=data), 202
         else:
             data = test_manager_controller_obj.fetch_robot_api_list()
+            return success_response(status=200, data=data), 202
+    except BadRequestException as e:
+        return error_response(400,str(e)), 400
+    except Exception as e:
+        return error_response(500,str(e)), 500
+    
+@test_manager.route('/custom-api/list', methods=['POST','GET'])
+def custom_api_handler():
+    try:
+        if request.method == 'POST':
+            data= test_manager_controller_obj.create_custom_api_list()
+            return success_response(status=201, data=data), 202
+        else:
+            data = test_manager_controller_obj.fetch_custom_api_list()
             return success_response(status=200, data=data), 202
     except BadRequestException as e:
         return error_response(400,str(e)), 400

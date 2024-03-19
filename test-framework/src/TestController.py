@@ -1,7 +1,6 @@
 from robot.api.deco import keyword
 from robot.api import logger
 from robot.libraries.BuiltIn import BuiltIn
-from utils import update_nested_dict_value, delete_nested_dict_key, update_nested_value, deep_dict_delete
 import requests
 from requests.exceptions import ConnectionError
 import sys
@@ -10,15 +9,16 @@ import json
 import random
 import string
 from pathlib import Path
-from Log import Log
 import time
 from datetime import datetime
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+from Log import Log
 from Constants import status_fail, status_pass, app_path
 from Setup import Setup
 from SSHClient import file_scp
-
-import urllib3
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+from APIController import APIController
 
 log = None
 
@@ -41,7 +41,7 @@ class TestController:
         self._test_cookies = None
         self._active_session_id = None
         self._robot_instance_id = int(config.ROBOT_INSTANCE_ID)
-
+        self._api_controller = APIController()
 
     @keyword('Setup Suite')
     def setup_suite(self, log_dir=None):
@@ -113,3 +113,41 @@ class TestController:
     @keyword('Suite Teardown')
     def suite_teardown(self, **kwargs):
         pass
+
+    @keyword('Make POST Request')
+    def make_post_request(self, url:str, file:str, delete:list = [], **kwargs):
+        try:
+            payload = self._api_controller._generate_payload_data(file=file)
+            resp = self._api_controller.post(url=url, payload=payload)
+            return resp
+        except Exception as err:
+            log.log_error(str(err))
+            return None
+        
+    @keyword('Make GET Request')
+    def make_get_request(self, url:str, params:dict = {}, **kwargs):
+        try:
+            resp = self._api_controller.get(url=url)
+            return resp
+        except Exception as err:
+            log.log_error(str(err))
+            return None
+        
+    @keyword('Make DELETE Request')
+    def make_delete_request(self, url:str, params:dict = {}, **kwargs):
+        try:
+            resp = self._api_controller.get(url=url)
+            return resp
+        except Exception as err:
+            log.log_error(str(err))
+            return None
+        
+    @keyword('Make PUT Request')
+    def make_put_request(self, url:str, file:str, delete:list = [], **kwargs):
+        try:
+            payload = self._api_controller._generate_payload_data(file=file)
+            resp = self._api_controller.put(url=url, payload=payload)
+            return resp
+        except Exception as err:
+            log.log_error(str(err))
+            return None

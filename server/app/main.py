@@ -4,6 +4,7 @@ from app.api.auth import auth
 from app.api.agent import agent
 from app.api.file_manager import file_manager
 from app.api.test_manager import test_manager
+from app.api.dummy import dummy_manager
 
 def create_flask_app():
     app = Flask(__name__)
@@ -12,4 +13,5 @@ def create_flask_app():
     app.register_blueprint(agent)
     app.register_blueprint(file_manager)
     app.register_blueprint(test_manager)
+    app.register_blueprint(dummy_manager)
     return app

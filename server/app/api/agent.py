@@ -14,7 +14,7 @@ agent = Blueprint('admin', __name__, url_prefix=API_PREFIX + '/agent')
 agent_controller_obj = AgentService()
 
 @agent.route('/execute-test-plan', methods=['GET'])
-def get_file_data():
+def execute_test_plan():
     try:
         return success_response()
     except BadRequestException as e:

@@ -28,7 +28,18 @@ def json_pretty_print(content):
             ': '))
 
 
-def update_nested_dict_value(d, target_key, new_value):
+def update_nested_dict_value(d: dict, target_key, new_value):
+    """
+    Update the value associated with the target_key in a nested dictionary.
+
+    Parameters:
+    d (dict): The nested dictionary.
+    target_key: The key whose value needs to be updated.
+    new_value: The new value to set for the target_key.
+
+    Returns:
+    dict: The updated nested dictionary.
+    """
     for key, value in d.items():
         if key == target_key:
             d[key] = new_value

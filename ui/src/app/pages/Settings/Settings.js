@@ -18,7 +18,7 @@ const Settings = () => {
     return (
         <ContentBox>
             <h6 className='text-blue'>App Settings</h6><br />
-            <Grid container spacing={2}>
+            <Grid container spacing={2} className='border'>
                 <Grid item xs={2}>
                     {/* <Paper style={{ maxHeight: '800px', overflow: 'auto' }}> */}
                     <Tabs value={value} onChange={handleChange} orientation="vertical">
